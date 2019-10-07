@@ -1,4 +1,10 @@
 .searchForm {
-  background: lime;
+  background: #edf0f5;
   grid-area: search-form;
+  padding: 3em 1em;
+  border-radius: 1em;
+}
+
+.heading {
+  text-align: center;
 }

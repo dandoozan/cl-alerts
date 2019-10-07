@@ -1,10 +1,10 @@
 .app {
-  background: #555;
+  background: #333;
   display: grid;
   grid-template-columns: auto minmax(auto, 800px) auto;
   column-gap: 1em;
   grid-template-areas:
     '. header .'
     '. search-form .';
-  margin-bottom: 10em;
+  padding-bottom: 10em;
 }

@@ -1,4 +1,14 @@
 .header {
-  background: yellow;
   grid-area: header;
+  color: white;
+  padding: 0.64em 0;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.subtitle {
+  color: #999;
 }
