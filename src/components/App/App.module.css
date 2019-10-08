@@ -5,6 +5,13 @@
   column-gap: 1em;
   grid-template-areas:
     '. header .'
-    '. search-form .';
+    '. main .';
   padding-bottom: 10em;
+}
+
+.main {
+  grid-area: main;
+  background: #edf0f5;
+  padding: 3em 1em;
+  border-radius: 1em;
 }
