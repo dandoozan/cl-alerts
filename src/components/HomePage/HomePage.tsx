@@ -4,13 +4,14 @@ import { Form, Row, Col, Button } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import firebase from '../../firebase';
 
-interface Props {}
+export default function HomePage(props) {
+  let [isSubmitted, setIsSubmitted] = useState(false);
 
-export default function HomePage({  }: Props) {
-  let [toCreate, setToCreate] = useState(false);
+  //todo: put these values in an object (so that i can easily pass
+  //them around as props) (eg. {city: {value: 'Phoenix', displayName: 'City'}, ...})
   let [city, setCity] = useState('Phoenix');
-  let [searchTerm, setSearchTerm] = useState('');
-  let [email, setEmail] = useState('');
+  let [searchTerm, setSearchTerm] = useState('test search term');
+  let [email, setEmail] = useState('test@email.com');
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -22,20 +23,28 @@ export default function HomePage({  }: Props) {
 
     //store these in firebase
     try {
-      let docRef = await firebase.firestore().collection('alerts').add({
-        city,
-        searchTerm,
-        email,
-      });
-      console.log('Document written with ID: ', docRef.id);
+      // let docRef = await firebase.firestore().collection('alerts').add({
+      //   city,
+      //   searchTerm,
+      //   email,
+      // });
+      // console.log('Document written with ID: ', docRef.id);
+      setIsSubmitted(true);
     } catch (error) {
       console.error('Error adding document: ', error);
     }
-    //setToCreate(true)
   }
 
-  if (toCreate) {
-    return <Redirect to="/create" />;
+  if (isSubmitted) {
+    return (
+      <Redirect
+        push
+        to={{
+          pathname: '/create',
+          state: { city, searchTerm, email },
+        }}
+      />
+    );
   } else {
     return (
       <div className={styles.homePage}>

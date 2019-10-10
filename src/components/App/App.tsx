@@ -11,12 +11,8 @@ function App() {
       <Header />
       <section className={styles.main}>
         <Switch>
-          <Route path="/create">
-            <CreatePage />
-          </Route>
-          <Route path="/">
-            <HomePage />
-          </Route>
+          <Route path="/create" component={CreatePage} />
+          <Route path="/" component={HomePage} />
         </Switch>
       </section>
     </div>
