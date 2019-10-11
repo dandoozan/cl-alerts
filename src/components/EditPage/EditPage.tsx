@@ -19,27 +19,24 @@ export default function EditPage(props) {
     let ignore = false;
 
     (async () => {
-      // let db = firebase.firestore();
-      // let docRef = db.collection('alerts').doc(alertId || '');
-      // let doc = await docRef.get();
-      // if (doc.exists) {
-      //   let data = doc.data();
-      //   console.log('Setting alertData:', data);
-      //   if (!ignore) {
-      //     setAlertData(data);
-      //   }
-      // } else {
-      //   // doc.data() will be undefined in this case
-      //   console.log('No such document!');
-      // }
-      setTimeout(() => {
-        console.log(`***setting alert data`);
-        setAlertData({
-          city: 'Phoenix',
-          searchTerm: 'new search term',
-          email: 'dandoozan@gmail.com',
-        });
-      }, 1000);
+      let db = firebase.firestore();
+      let docRef = db.collection('alerts').doc(alertId || '');
+      let doc = await docRef.get();
+      if (doc.exists) {
+        let data = doc.data();
+        console.log('Setting alertData:', data);
+        if (!ignore) {
+          setAlertData(data);
+        }
+      }
+      // setTimeout(() => {
+      //   console.log(`***setting alert data`);
+      //   setAlertData({
+      //     city: 'Phoenix',
+      //     searchTerm: 'new search term',
+      //     email: 'dandoozan@gmail.com',
+      //   });
+      // }, 1000);
     })();
 
     return () => {
@@ -48,7 +45,7 @@ export default function EditPage(props) {
   }, [alertId]);
 
   if (!alertData) {
-    return <div>isLoading...</div>;
+    return <div>Loading...</div>;
   } else {
     return (
       <div className={styles.editPage}>
@@ -56,11 +53,16 @@ export default function EditPage(props) {
         <h4>User: {alertData.email}</h4>
         <Formik
           initialValues={{ ...alertData }}
-          onSubmit={(values, { setSubmitting }) => {
-            console.log('​***submitting values=', values);
-            setTimeout(() => {
-              setSubmitting(false);
-            }, 400);
+          onSubmit={async (values, { setSubmitting }) => {
+            console.log('​***writing to database, values=', values);
+            let db = firebase.firestore();
+            //todo: verify that values has the appropriate properties (so i dont
+            //write some arbitrary data to my database)
+            await db
+              .collection('alerts')
+              .doc(alertId || '')
+              .set(values);
+            setSubmitting(false);
           }}
         >
           {({
@@ -73,18 +75,6 @@ export default function EditPage(props) {
             handleSubmit,
             isSubmitting,
           }) => (
-            // <Form>
-            //   <Field component="select" name="city">
-            //     <option>Phoenix</option>
-            //     <option>Tucson</option>
-            //   </Field>
-            //   <Field name="searchTerm" />
-            //   <Field type="email" name="email" />
-            //   <button type="submit" disabled={isSubmitting}>
-            //     Submit
-            //   </button>
-            // </Form>
-
             <Form onSubmit={handleSubmit}>
               <Form.Group as={Row} controlId="editForm.city">
                 <Form.Label column sm="2">
