@@ -3,8 +3,8 @@ import styles from './CreatePage.module.css';
 import { Link } from 'react-router-dom';
 
 export default function CreatePage(props) {
-  let formItems = props.location.state;
-  let { city, searchTerm, email } = formItems;
+  let otherProps = props.location.state;
+  let { city, searchTerm, email, alertId } = otherProps;
   return (
     <div className={styles.createPage}>
       <h2>Success!</h2>
@@ -35,7 +35,7 @@ export default function CreatePage(props) {
           </tr>
         </tbody>
       </table>
-      <Link to="/manage">Edit this alert</Link>
+      <Link to={`/edit?u=${email}&alertId=${alertId}`}>Edit this alert</Link>
     </div>
   );
 }

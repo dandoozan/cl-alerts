@@ -4,11 +4,13 @@ import { Form, Row, Col, Button } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import firebase from '../../firebase';
 
+const TBX_SHOULD_USE_REAL_DB = false;
+const TBX_TEST_ALERT_ID = 'pNx6dGqLmEfXaOmyLkBN';
+
 export default function HomePage(props) {
   let [isSubmitted, setIsSubmitted] = useState(false);
+  let [alertId, setAlertId] = useState(TBX_TEST_ALERT_ID);
 
-  //todo: put these values in an object (so that i can easily pass
-  //them around as props) (eg. {city: {value: 'Phoenix', displayName: 'City'}, ...})
   let [city, setCity] = useState('Phoenix');
   let [searchTerm, setSearchTerm] = useState('test search term');
   let [email, setEmail] = useState('test@email.com');
@@ -17,18 +19,23 @@ export default function HomePage(props) {
     e.preventDefault();
     e.stopPropagation();
     console.log(`***onsubmit`);
-    console.log('​city=', city);
-    console.log('​searchTerm=', searchTerm);
-    console.log('​email=', email);
 
     //store these in firebase
     try {
-      // let docRef = await firebase.firestore().collection('alerts').add({
-      //   city,
-      //   searchTerm,
-      //   email,
-      // });
-      // console.log('Document written with ID: ', docRef.id);
+      let docRef;
+      if (TBX_SHOULD_USE_REAL_DB) {
+        let db = firebase.firestore();
+        docRef = await db.collection('alerts').add({
+          city,
+          searchTerm,
+          email,
+        });
+        console.log('Document written with ID: ', docRef.id);
+      } else {
+        docRef = { id: TBX_TEST_ALERT_ID };
+      }
+
+      setAlertId(docRef.id);
       setIsSubmitted(true);
     } catch (error) {
       console.error('Error adding document: ', error);
@@ -41,7 +48,7 @@ export default function HomePage(props) {
         push
         to={{
           pathname: '/create',
-          state: { city, searchTerm, email },
+          state: { city, searchTerm, email, alertId },
         }}
       />
     );
