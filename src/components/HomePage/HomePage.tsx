@@ -1,54 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './HomePage.module.css';
-import { Form, Row, Col, Button } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import firebase from '../../firebase';
+import { Formik } from 'formik';
+import Select from '../Select';
+import Input from '../Input';
+import EmailInput from '../EmailInput';
+import { isEmpty } from 'lodash';
 
-const TBX_SHOULD_USE_REAL_DB = false;
-const TBX_TEST_ALERT_ID = 'pNx6dGqLmEfXaOmyLkBN';
+//todo: put this in a separate file (cities.json?)
+const cities = ['Phoenix', 'Tucson'];
+
+const initialFormValues = {
+  city: cities[0],
+  searchTerm: '',
+  email: '',
+};
 
 export default function HomePage(props) {
-  let [isSubmitted, setIsSubmitted] = useState(false);
-  let [alertId, setAlertId] = useState(TBX_TEST_ALERT_ID);
+  let [alertId, setAlertId] = useState('');
+  let [formValues, setFormValues] = useState({});
 
-  let [city, setCity] = useState('Phoenix');
-  let [searchTerm, setSearchTerm] = useState('test search term');
-  let [email, setEmail] = useState('test@email.com');
+  useEffect(() => {
+    if (!isEmpty(formValues)) {
+      console.log('writing to db, formValues=', formValues);
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log(`***onsubmit`);
-
-    //store these in firebase
-    try {
-      let docRef;
-      if (TBX_SHOULD_USE_REAL_DB) {
-        let db = firebase.firestore();
-        docRef = await db.collection('alerts').add({
-          city,
-          searchTerm,
-          email,
-        });
-        console.log('Document written with ID: ', docRef.id);
-      } else {
-        docRef = { id: TBX_TEST_ALERT_ID };
-      }
-
-      setAlertId(docRef.id);
-      setIsSubmitted(true);
-    } catch (error) {
-      console.error('Error adding document: ', error);
+      // let db = firebase.firestore();
+      // let docRef = await db.collection('alerts').add(values);
+      // setAlertId(docRef.id);
     }
-  }
+  }, [formValues]);
 
-  if (isSubmitted) {
+  //go to success page after the alert has been created
+  if (alertId) {
     return (
       <Redirect
         push
         to={{
           pathname: '/create',
-          state: { city, searchTerm, email, alertId },
+          state: { ...formValues, alertId },
         }}
       />
     );
@@ -56,55 +47,45 @@ export default function HomePage(props) {
     return (
       <div className={styles.homePage}>
         <h2 className="text-center">Search Craigslist</h2>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group as={Row} controlId="searchForm.city">
-            <Form.Label column sm="2">
-              City
-            </Form.Label>
-            <Col sm="10">
-              <Form.Control
-                as="select"
-                value={city}
-                //@ts-ignore (ignore because typescript complains about "value")
-                onChange={e => setCity(e.target.value)}
-              >
-                <option>Phoenix</option>
-                <option>Tucson</option>
-              </Form.Control>
-            </Col>
-          </Form.Group>
 
-          <Form.Group as={Row} controlId="searchForm.searchTerm">
-            <Form.Label column sm="2">
-              Search Term
-            </Form.Label>
-            <Col sm="10">
-              <Form.Control
-                placeholder="(Optional) e.g. dining table"
-                value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
+        <Formik
+          initialValues={initialFormValues}
+          onSubmit={setFormValues}
+        >
+          {({ values, handleChange, handleSubmit }) => (
+            <Form onSubmit={handleSubmit}>
+              <Select
+                {...{
+                  label: 'City',
+                  name: 'city',
+                  options: cities,
+                  value: values.city,
+                  handleChange,
+                }}
               />
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row} controlId="searchForm.email">
-            <Form.Label column sm="2">
-              Email
-            </Form.Label>
-            <Col sm="10">
-              <Form.Control
-                type="email"
-                placeholder="e.g. johndoe@gmail.com"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
+              <Input
+                {...{
+                  label: 'Search Term',
+                  name: 'searchTerm',
+                  value: values.searchTerm,
+                  placeholder: '(Optional) e.g. dining table',
+                  handleChange,
+                }}
               />
-            </Col>
-          </Form.Group>
-
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
-        </Form>
+              <EmailInput
+                {...{
+                  label: 'Email',
+                  name: 'email',
+                  value: values.email,
+                  handleChange,
+                }}
+              />
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+            </Form>
+          )}
+        </Formik>
       </div>
     );
   }
