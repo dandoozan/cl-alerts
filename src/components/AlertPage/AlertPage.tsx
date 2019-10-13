@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from './EditPage.module.css';
+import styles from './AlertPage.module.css';
 import { useLocation } from 'react-router-dom';
 import { Formik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
@@ -10,14 +10,14 @@ import DeleteButton from '../DeleteButton';
 import { updateAlert, getAlert } from '../../database';
 import cities from '../../data/cities.json';
 
-export default function EditPage(props) {
+export default function AlertPage(props) {
   let {} = props;
   let [alertData, setAlertData] = useState<any>(null);
   let [formValues, setFormValues] = useState<any>(null);
   let [isEditted, setIsEditted] = useState(false);
 
   let query = new URLSearchParams(useLocation().search);
-  let alertId = query.get('alertId');
+  let alertId = query.get('id');
 
   //fetch the alert from the database
   useEffect(() => {
@@ -45,13 +45,13 @@ export default function EditPage(props) {
   //update database when form is submitted
   useEffect(() => {
     console.log('In update database effect');
-    if (formValues && alertId) {
+    if (alertId && formValues) {
       console.log('​***writing to database, formValues=', formValues);
       (async () => {
         await updateAlert(alertId, formValues);
       })();
     }
-  }, [formValues]);
+  }, [alertId, formValues]);
 
   //Make the successful edit message hide after some time
   useEffect(() => {

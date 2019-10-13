@@ -35,7 +35,7 @@ export default function CreatePage(props) {
           </tr>
         </tbody>
       </table>
-      <Link to={`/edit?u=${email}&alertId=${alertId}`}>Edit this alert</Link>
+      <Link to={`/alert?id=${alertId}`}>Edit this alert</Link>
     </div>
   );
 }

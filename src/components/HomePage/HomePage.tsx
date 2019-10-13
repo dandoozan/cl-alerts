@@ -22,8 +22,6 @@ export default function HomePage(props) {
   //write form values to database
   useEffect(() => {
     if (formValues) {
-      console.log('writing to db, formValues=', formValues);
-
       (async () => {
         let alertId = await addAlert(formValues);
         // setAlertId(alertId);

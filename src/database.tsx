@@ -1,7 +1,7 @@
 import firebase from './firebase';
 
 export async function addAlert(data) {
-  console.log(`***in database addAlert`);
+  console.log(`***in database addAlert, data=`, data);
   return '';
   // try {
   //     let db = firebase.firestore();
@@ -12,7 +12,7 @@ export async function addAlert(data) {
   // }
 }
 export function getAlert(id) {
-  console.log(`***in database getAlert`);
+  console.log(`***in database getAlert, id=${id}`);
   return null;
   // try {
   //    let db = firebase.firestore();
@@ -29,7 +29,7 @@ export function getAlert(id) {
   // }
 }
 export async function updateAlert(id, data) {
-  console.log(`***in database updateAlert`);
+  console.log(`***in database updateAlert, id=${id}, data=`, data);
   // try {
   //    let db = firebase.firestore();
   //    await db
@@ -41,7 +41,7 @@ export async function updateAlert(id, data) {
   // }
 }
 export async function deleteAlert(id) {
-  console.log(`***in database deleteAlert`);
+  console.log(`***in database deleteAlert, id=${id}`);
   // let db = firebase.firestore();
   // try {
   //   await db
