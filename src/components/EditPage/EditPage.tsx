@@ -8,9 +8,7 @@ import Input from '../Input';
 import EmailInput from '../EmailInput';
 import DeleteButton from '../DeleteButton';
 import { updateAlert, getAlert } from '../../database';
-
-//todo: put this in a separate file (cities.json?)
-const cities = ['Phoenix', 'Tucson'];
+import cities from '../../data/cities.json';
 
 export default function EditPage(props) {
   let {} = props;

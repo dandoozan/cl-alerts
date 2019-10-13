@@ -7,9 +7,7 @@ import Select from '../Select';
 import Input from '../Input';
 import EmailInput from '../EmailInput';
 import { addAlert } from '../../database';
-
-//todo: put this in a separate file (cities.json?)
-const cities = ['Phoenix', 'Tucson'];
+import cities from '../../data/cities.json'
 
 const initialFormValues = {
   city: cities[0],
