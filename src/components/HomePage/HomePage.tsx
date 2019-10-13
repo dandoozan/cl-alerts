@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import styles from './HomePage.module.css';
 import { Form, Button } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-import firebase from '../../firebase';
 import { Formik } from 'formik';
 import Select from '../Select';
 import Input from '../Input';
 import EmailInput from '../EmailInput';
-import { isEmpty } from 'lodash';
+import { addAlert } from '../../database';
 
 //todo: put this in a separate file (cities.json?)
 const cities = ['Phoenix', 'Tucson'];
@@ -27,9 +26,10 @@ export default function HomePage(props) {
     if (formValues) {
       console.log('writing to db, formValues=', formValues);
 
-      // let db = firebase.firestore();
-      // let docRef = await db.collection('alerts').add(values);
-      // setAlertId(docRef.id);
+      (async () => {
+        let alertId = await addAlert(formValues);
+        // setAlertId(alertId);
+      })()
     }
   }, [formValues]);
 

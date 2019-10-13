@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import styles from './EditPage.module.css';
 import { useLocation } from 'react-router-dom';
-import firebase from '../../firebase';
 import { Formik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 import Select from '../Select';
 import Input from '../Input';
 import EmailInput from '../EmailInput';
+import DeleteButton from '../DeleteButton';
+import { updateAlert, getAlert } from '../../database';
 
 //todo: put this in a separate file (cities.json?)
 const cities = ['Phoenix', 'Tucson'];
 
 export default function EditPage(props) {
-  let { } = props;
+  let {} = props;
   let [alertData, setAlertData] = useState<any>(null);
   let [formValues, setFormValues] = useState<any>(null);
   let [isEditted, setIsEditted] = useState(false);
@@ -27,10 +28,7 @@ export default function EditPage(props) {
 
     (async () => {
       if (alertId) {
-        let db = firebase.firestore();
-        let docRef = db.collection('alerts').doc(alertId);
-        let doc = await docRef.get();
-        let data = doc.data();
+        let data = await getAlert(alertId);
         if (data) {
           console.log('Setting alertData:', data);
 
@@ -52,11 +50,7 @@ export default function EditPage(props) {
     if (formValues && alertId) {
       console.log('​***writing to database, formValues=', formValues);
       (async () => {
-        // let db = firebase.firestore();
-        // await db
-        //   .collection('alerts')
-        //   .doc(alertId)
-        //   .set(formValues);
+        await updateAlert(alertId, formValues);
       })();
     }
   }, [formValues]);
@@ -75,53 +69,56 @@ export default function EditPage(props) {
     <div className={styles.editPage}>
       <h1>Edit Alert</h1>
       {alertData && (
-        <Formik
-          initialValues={alertData}
-          onSubmit={(values, { setSubmitting }) => {
-            console.log('In submit');
+        <>
+          <Formik
+            initialValues={alertData}
+            onSubmit={(values, { setSubmitting }) => {
+              console.log('In submit');
 
-            setFormValues(values);
+              setFormValues(values);
 
-            //todo: I want to wait for the above command before firing
-            //these so figure out how to await the command above
-            setIsEditted(true);
-            setSubmitting(false);
-          }}
-        >
-          {({ values, handleChange, handleSubmit, isSubmitting }) => (
-            <Form onSubmit={handleSubmit}>
-              <Select
-                {...{
-                  label: 'City',
-                  name: 'city',
-                  options: cities,
-                  value: values.city,
-                  handleChange,
-                }}
-              />
-              <Input
-                {...{
-                  label: 'Search Term',
-                  name: 'searchTerm',
-                  value: values.searchTerm,
-                  handleChange,
-                }}
-              />
-              <EmailInput
-                {...{
-                  label: 'Email',
-                  name: 'email',
-                  value: values.email,
-                  handleChange,
-                }}
-              />
-              <Button variant="primary" type="submit" disabled={isSubmitting}>
-                Submit
-              </Button>
-              {isEditted && <div>Successfully editted!</div>}
-            </Form>
-          )}
-        </Formik>
+              //todo: I want to wait for the above command before firing
+              //these so figure out how to await the command above
+              setIsEditted(true);
+              setSubmitting(false);
+            }}
+          >
+            {({ values, handleChange, handleSubmit, isSubmitting }) => (
+              <Form onSubmit={handleSubmit}>
+                <Select
+                  {...{
+                    label: 'City',
+                    name: 'city',
+                    options: cities,
+                    value: values.city,
+                    handleChange,
+                  }}
+                />
+                <Input
+                  {...{
+                    label: 'Search Term',
+                    name: 'searchTerm',
+                    value: values.searchTerm,
+                    handleChange,
+                  }}
+                />
+                <EmailInput
+                  {...{
+                    label: 'Email',
+                    name: 'email',
+                    value: values.email,
+                    handleChange,
+                  }}
+                />
+                <Button variant="primary" type="submit" disabled={isSubmitting}>
+                  Submit
+                </Button>
+                {isEditted && <div>Successfully editted!</div>}
+              </Form>
+            )}
+          </Formik>
+          <DeleteButton {...{ alertId }} />
+        </>
       )}
     </div>
   );
