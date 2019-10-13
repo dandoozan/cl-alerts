@@ -20,10 +20,11 @@ const initialFormValues = {
 
 export default function HomePage(props) {
   let [alertId, setAlertId] = useState('');
-  let [formValues, setFormValues] = useState({});
+  let [formValues, setFormValues] = useState<any>(null);
 
+  //write form values to database
   useEffect(() => {
-    if (!isEmpty(formValues)) {
+    if (formValues) {
       console.log('writing to db, formValues=', formValues);
 
       // let db = firebase.firestore();

@@ -8,32 +8,36 @@ import Select from '../Select';
 import Input from '../Input';
 import EmailInput from '../EmailInput';
 
+//todo: put this in a separate file (cities.json?)
+const cities = ['Phoenix', 'Tucson'];
+
 export default function EditPage(props) {
-  let {} = props;
-  let tbx: any = null;
-  let [alertData, setAlertData] = useState(tbx);
+  let { } = props;
+  let [alertData, setAlertData] = useState<any>(null);
+  let [formValues, setFormValues] = useState<any>(null);
+  let [isEditted, setIsEditted] = useState(false);
 
   let query = new URLSearchParams(useLocation().search);
   let alertId = query.get('alertId');
 
-  //fetch the alerts for this user from the database
+  //fetch the alert from the database
   useEffect(() => {
+    console.log('In fetching data effect');
     let ignore = false;
 
     (async () => {
-      let db = firebase.firestore();
-      let docRef = db.collection('alerts').doc(alertId || '');
-      let doc = await docRef.get();
-      if (doc.exists) {
+      if (alertId) {
+        let db = firebase.firestore();
+        let docRef = db.collection('alerts').doc(alertId);
+        let doc = await docRef.get();
         let data = doc.data();
-        console.log('Setting alertData:', data);
+        if (data) {
+          console.log('Setting alertData:', data);
 
-        //tbx (the timeout)
-        setTimeout(() => {
           if (!ignore) {
             setAlertData(data);
           }
-        }, 500);
+        }
       }
     })();
 
@@ -42,34 +46,55 @@ export default function EditPage(props) {
     };
   }, [alertId]);
 
+  //update database when form is submitted
+  useEffect(() => {
+    console.log('In update database effect');
+    if (formValues && alertId) {
+      console.log('​***writing to database, formValues=', formValues);
+      (async () => {
+        // let db = firebase.firestore();
+        // await db
+        //   .collection('alerts')
+        //   .doc(alertId)
+        //   .set(formValues);
+      })();
+    }
+  }, [formValues]);
+
+  //Make the successful edit message hide after some time
+  useEffect(() => {
+    console.log('In hide edit msg effect');
+    if (isEditted) {
+      setTimeout(() => {
+        setIsEditted(false);
+      }, 1000);
+    }
+  }, [isEditted]);
+
   return (
     <div className={styles.editPage}>
       <h1>Edit Alert</h1>
       {alertData && (
         <Formik
           initialValues={alertData}
-          onSubmit={async (values, { setSubmitting }) => {
-            console.log('​***writing to database, values=', values);
-            let db = firebase.firestore();
-            await db
-              .collection('alerts')
-              .doc(alertId || '')
-              .set(values);
+          onSubmit={(values, { setSubmitting }) => {
+            console.log('In submit');
+
+            setFormValues(values);
+
+            //todo: I want to wait for the above command before firing
+            //these so figure out how to await the command above
+            setIsEditted(true);
             setSubmitting(false);
           }}
         >
-          {({
-            values,
-            handleChange,
-            handleSubmit,
-            isSubmitting,
-          }) => (
+          {({ values, handleChange, handleSubmit, isSubmitting }) => (
             <Form onSubmit={handleSubmit}>
               <Select
                 {...{
                   label: 'City',
                   name: 'city',
-                  options: ['Phoenix', 'Tucson'],
+                  options: cities,
                   value: values.city,
                   handleChange,
                 }}
@@ -93,6 +118,7 @@ export default function EditPage(props) {
               <Button variant="primary" type="submit" disabled={isSubmitting}>
                 Submit
               </Button>
+              {isEditted && <div>Successfully editted!</div>}
             </Form>
           )}
         </Formik>
