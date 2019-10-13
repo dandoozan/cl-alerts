@@ -28,8 +28,6 @@ export default function AlertPage(props) {
       if (alertId) {
         let data = await getAlert(alertId);
         if (data) {
-          console.log('Setting alertData:', data);
-
           if (!ignore) {
             setAlertData(data);
           }
