@@ -13,10 +13,17 @@ const initialFormValues = {
 
 export default function HomePage(props) {
   let [alertData, setAlertData] = useState<any>(null);
+  let [submitError, setSubmitError] = useState(false);
 
-  async function onSubmit(formValues) {
+  async function onSubmit(formValues, { setSubmitting }) {
+    setSubmitError(false);
     let id = await addAlert(formValues);
-    setAlertData({ id, ...formValues });
+    if (id) {
+      setAlertData({ id, ...formValues });
+    } else {
+      setSubmitError(true);
+    }
+    setSubmitting(false);
   }
 
   //go to success page after the alert has been created
@@ -34,7 +41,13 @@ export default function HomePage(props) {
     return (
       <div className={styles.homePage}>
         <h2 className="text-center">Search Craigslist</h2>
-        <HomePageForm initialValues={initialFormValues} onSubmit={onSubmit}/>
+        <HomePageForm initialValues={initialFormValues} onSubmit={onSubmit} />
+        {submitError && (
+          <div>
+            Oops, there was a problem creating the alert. Please try submitting
+            again.
+          </div>
+        )}
       </div>
     );
   }

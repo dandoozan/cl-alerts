@@ -11,7 +11,7 @@ export default function HomePageForm(props) {
   let { initialValues, onSubmit } = props;
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ values, handleChange, handleSubmit }) => (
+      {({ values, handleChange, handleSubmit, isSubmitting }) => (
         <Form onSubmit={handleSubmit}>
           <Select
             {...{
@@ -39,7 +39,7 @@ export default function HomePageForm(props) {
               handleChange,
             }}
           />
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" disabled={isSubmitting}>
             Submit
           </Button>
         </Form>

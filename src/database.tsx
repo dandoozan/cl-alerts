@@ -1,8 +1,14 @@
 import firebase from './firebase';
 
 export async function addAlert(data) {
-  console.log(`***in database addAlert, data=`, data);
-  return '';
+  return new Promise((resolve, reject) => {
+    console.log(`***in database addAlert, data=`, data);
+    setTimeout(() => {
+      resolve('');
+    }, 1000);
+  });
+  // console.log(`***in database addAlert, data=`, data);
+  // return '';
   // try {
   //     let db = firebase.firestore();
   //     let docRef = await db.collection('alerts').add(data);
@@ -12,8 +18,14 @@ export async function addAlert(data) {
   // }
 }
 export function getAlert(id) {
-  console.log(`***in database getAlert, id=${id}`);
-  return null;
+  return new Promise((resolve, reject) => {
+    console.log(`***in database getAlert, id=${id}`);
+    setTimeout(() => {
+      resolve(null);
+    }, 1000);
+  });
+  // console.log(`***in database getAlert, id=${id}`);
+  // return null;
   // try {
   //    let db = firebase.firestore();
   //    let doc = await db.collection('alerts').doc(id).get();
@@ -29,7 +41,13 @@ export function getAlert(id) {
   // }
 }
 export async function updateAlert(id, data) {
-  console.log(`***in database updateAlert, id=${id}, data=`, data);
+  return new Promise((resolve, reject) => {
+    console.log(`***in database updateAlert, id=${id}, data=`, data);
+    setTimeout(() => {
+      resolve(true);
+    }, 1000);
+  });
+  // console.log(`***in database updateAlert, id=${id}, data=`, data);
   // try {
   //    let db = firebase.firestore();
   //    await db
@@ -41,7 +59,13 @@ export async function updateAlert(id, data) {
   // }
 }
 export async function deleteAlert(id) {
-  console.log(`***in database deleteAlert, id=${id}`);
+  return new Promise((resolve, reject) => {
+    console.log(`***in database deleteAlert, id=${id}`);
+    setTimeout(() => {
+      resolve(true);
+    }, 1000);
+  });
+  // console.log(`***in database deleteAlert, id=${id}`);
   // let db = firebase.firestore();
   // try {
   //   await db
