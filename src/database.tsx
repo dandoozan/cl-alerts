@@ -1,14 +1,16 @@
 import firebase from './firebase';
 
-export async function addAlert(data) {
+//tbx
+function sleep(ms) {
   return new Promise((resolve, reject) => {
-    console.log(`***in database addAlert, data=`, data);
-    setTimeout(() => {
-      resolve('');
-    }, 1000);
+    setTimeout(resolve, ms);
   });
-  // console.log(`***in database addAlert, data=`, data);
-  // return '';
+}
+
+export async function addAlert(data) {
+  console.log(`***in database addAlert, data=`, data);
+  await sleep(1000);
+  return '';
   // try {
   //   let db = firebase.firestore();
   //   let docRef = await db.collection('alerts').add(data);
@@ -17,40 +19,27 @@ export async function addAlert(data) {
   //   console.error('Error adding document: ', error);
   // }
 }
-export function getAlert(id) {
-  return new Promise((resolve, reject) => {
-    console.log(`***in database getAlert, id=${id}`);
-    setTimeout(() => {
-      resolve(null);
-    }, 1000);
-  });
-  // console.log(`***in database getAlert, id=${id}`);
-  // return null;
-  // try {
-  //   let db = firebase.firestore();
-  //   let doc = await db
-  //     .collection('alerts')
-  //     .doc(id)
-  //     .get();
-  //   let data = doc.data();
-  //   if (doc.exists) {
-  //     return doc.data();
-  //   } else {
-  //     // doc.data() will be undefined in this case
-  //     console.log('No such document!');
-  //   }
-  // } catch (error) {
-  //   console.error('Error getting document: ', error);
-  // }
+export async function getAlert(id) {
+  console.log(`***in database getAlert, id=${id}`);
+  await sleep(1000);
+  try {
+    let db = firebase.firestore();
+    let doc = await db
+      .collection('alerts')
+      .doc(id)
+      .get();
+    if (doc.exists) {
+      return doc.data();
+    }
+  } catch (error) {
+    // console.error('Error getting document: ', error);
+  }
+  return null;
 }
 export async function updateAlert(id, data) {
-  return new Promise((resolve, reject) => {
-    console.log(`***in database updateAlert, id=${id}, data=`, data);
-    setTimeout(() => {
-      resolve(true);
-    }, 1000);
-  });
-  // console.log(`***in database updateAlert, id=${id}, data=`, data);
+  console.log(`***in database updateAlert, id=${id}, data=`, data);
+  await sleep(1000);
+  return false;
   // try {
   //    let db = firebase.firestore();
   //    await db
@@ -62,13 +51,9 @@ export async function updateAlert(id, data) {
   // }
 }
 export async function deleteAlert(id) {
-  return new Promise((resolve, reject) => {
-    console.log(`***in database deleteAlert, id=${id}`);
-    setTimeout(() => {
-      resolve(true);
-    }, 1000);
-  });
-  // console.log(`***in database deleteAlert, id=${id}`);
+  console.log(`***in database deleteAlert, id=${id}`);
+  await sleep(1000);
+  return true;
   // let db = firebase.firestore();
   // try {
   //   await db

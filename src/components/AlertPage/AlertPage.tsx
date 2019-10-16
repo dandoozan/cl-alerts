@@ -63,7 +63,7 @@ export default function AlertPage(props) {
   return (
     <div className={styles.editPage}>
       <h1>Edit Alert</h1>
-      {alertData && (
+      {alertData ? (
         <>
           <Formik
             initialValues={alertData}
@@ -114,7 +114,7 @@ export default function AlertPage(props) {
           </Formik>
           <DeleteButton {...{ alertId }} />
         </>
-      )}
+      ) : 'Fetching alert data...'}
     </div>
   );
 }
