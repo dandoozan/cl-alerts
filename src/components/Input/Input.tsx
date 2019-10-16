@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './Input.module.css';
 import { Form, Col, Row } from 'react-bootstrap';
 
 export default function Input(props) {

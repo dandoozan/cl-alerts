@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './Select.module.css';
 import { Form, Col, Row } from 'react-bootstrap';
 
 export default function Select(props) {

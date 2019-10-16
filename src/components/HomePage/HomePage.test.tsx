@@ -22,8 +22,6 @@ import { BrowserRouter } from 'react-router-dom';
 //  -should
 //  -should
 
-jest.mock('../../database');
-
 beforeEach(() => {
   //@ts-ignore
   db.addAlert = jest.fn();
@@ -43,8 +41,7 @@ it('should call database.addAlert on submit', async () => {
   await wait(() => expect(getByText('Submit')).not.toHaveAttribute('disabled'));
 
   expect(db.addAlert).toHaveBeenCalledTimes(1);
-  //@ts-ignore (ignore because TS doesn't know that the method has
-  //been mocked, so it gives an error: "Property 'mock' does not exist on type...")
+  //@ts-ignore (ignore because TS gives error: "Property 'mock' does not exist on type...")
   expect(db.addAlert.mock.calls[0]).toMatchSnapshot();
 });
 it('should redirect to /success after submit', async () => {

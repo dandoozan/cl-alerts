@@ -10,11 +10,11 @@ export async function addAlert(data) {
   // console.log(`***in database addAlert, data=`, data);
   // return '';
   // try {
-  //     let db = firebase.firestore();
-  //     let docRef = await db.collection('alerts').add(data);
-  //     return docRef.id;
+  //   let db = firebase.firestore();
+  //   let docRef = await db.collection('alerts').add(data);
+  //   return docRef.id;
   // } catch (error) {
-  //     console.error("Error adding document: ", error);
+  //   console.error('Error adding document: ', error);
   // }
 }
 export function getAlert(id) {
@@ -27,17 +27,20 @@ export function getAlert(id) {
   // console.log(`***in database getAlert, id=${id}`);
   // return null;
   // try {
-  //    let db = firebase.firestore();
-  //    let doc = await db.collection('alerts').doc(id).get();
-  //    let data = doc.data();
-  //    if (doc.exists) {
-  //        return doc.data();
-  //    } else {
-  //        // doc.data() will be undefined in this case
-  //        console.log("No such document!");
-  //    }
+  //   let db = firebase.firestore();
+  //   let doc = await db
+  //     .collection('alerts')
+  //     .doc(id)
+  //     .get();
+  //   let data = doc.data();
+  //   if (doc.exists) {
+  //     return doc.data();
+  //   } else {
+  //     // doc.data() will be undefined in this case
+  //     console.log('No such document!');
+  //   }
   // } catch (error) {
-  //    console.error('Error getting document: ', error);
+  //   console.error('Error getting document: ', error);
   // }
 }
 export async function updateAlert(id, data) {

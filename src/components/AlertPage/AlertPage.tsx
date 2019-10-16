@@ -11,7 +11,6 @@ import { updateAlert, getAlert } from '../../database';
 import cities from '../../data/cities.json';
 
 export default function AlertPage(props) {
-  let {} = props;
   let [alertData, setAlertData] = useState<any>(null);
   let [formValues, setFormValues] = useState<any>(null);
   let [isEditted, setIsEditted] = useState(false);
