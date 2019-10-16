@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { addAlert } from '../../database';
 import cities from '../../data/cities.json';
 import HomePageForm from '../HomePageForm';
+import SubmitError from '../SubmitError';
 
 const initialFormValues = {
   city: cities[0],
@@ -42,12 +43,7 @@ export default function HomePage(props) {
       <div className={styles.homePage}>
         <h2 className="text-center">Search Craigslist</h2>
         <HomePageForm initialValues={initialFormValues} onSubmit={onSubmit} />
-        {submitError && (
-          <div>
-            Oops, there was a problem creating the alert. Please try submitting
-            again.
-          </div>
-        )}
+        {submitError && <SubmitError />}
       </div>
     );
   }
