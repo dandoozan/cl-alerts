@@ -39,7 +39,7 @@ export default function EditForm(props) {
             }}
           />
           <Button variant="primary" type="submit" disabled={isSubmitting}>
-            Submit
+            Save changes
           </Button>
         </Form>
       )}
