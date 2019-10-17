@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './AlertPage.module.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Redirect } from 'react-router-dom';
 import DeleteButton from '../DeleteButton';
 import { updateAlert, getAlert } from '../../database';
 import EditForm from '../EditForm';
@@ -10,6 +10,7 @@ export default function AlertPage(props) {
   let [alertData, setAlertData] = useState<any>(null);
   let [isEditted, setIsEditted] = useState(false);
   let [submitError, setSubmitError] = useState(false);
+  let [invalidAlertId, setInvalidAlertId] = useState(false);
 
   let query = new URLSearchParams(useLocation().search);
   let alertId = query.get('id');
@@ -26,7 +27,6 @@ export default function AlertPage(props) {
 
   //fetch the alert from the database
   useEffect(() => {
-    console.log('In fetching data effect');
     let ignore = false;
 
     (async () => {
@@ -36,7 +36,11 @@ export default function AlertPage(props) {
           if (!ignore) {
             setAlertData(data);
           }
+        } else {
+          setInvalidAlertId(true);
         }
+      } else {
+        setInvalidAlertId(true);
       }
     })();
 
@@ -47,7 +51,6 @@ export default function AlertPage(props) {
 
   //Make the successful edit message hide after some time
   useEffect(() => {
-    console.log('In hide edit msg effect');
     if (isEditted) {
       setTimeout(() => {
         setIsEditted(false);
@@ -55,19 +58,23 @@ export default function AlertPage(props) {
     }
   }, [isEditted]);
 
-  return (
-    <div className={styles.editPage}>
-      <h1>Edit Alert</h1>
-      {alertData ? (
-        <>
-          <EditForm initialValues={alertData} onSubmit={onSubmit} />
-          {isEditted && <div>Successfully editted!</div>}
-          {submitError && <SubmitError />}
-          <DeleteButton {...{ alertId }} />
-        </>
-      ) : (
-        'Fetching alert data...'
-      )}
-    </div>
-  );
+  if (invalidAlertId) {
+    return <Redirect push to="/" />;
+  } else {
+    return (
+      <div className={styles.editPage}>
+        <h1>Edit Alert</h1>
+        {alertData ? (
+          <>
+            <EditForm initialValues={alertData} onSubmit={onSubmit} />
+            {isEditted && <div>Successfully editted!</div>}
+            {submitError && <SubmitError />}
+            <DeleteButton {...{ alertId }} />
+          </>
+        ) : (
+          'Fetching alert data...'
+        )}
+      </div>
+    );
+  }
 }
