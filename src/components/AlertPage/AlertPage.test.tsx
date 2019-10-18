@@ -5,6 +5,7 @@ import {
   fireEvent,
   waitForElementToBeRemoved,
   wait,
+  waitForElement,
 } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { MemoryRouter } from 'react-router-dom';
@@ -17,11 +18,10 @@ import * as db from '../../database';
 //  D-should show message after edit is done
 //  D-should show error message if edit failed
 //  X-should show successful edit msg even if no changes were made in the form
-//  -should call database.delete on delete
-//  -should redirect to homepage when delete is successful
-//  -should show error message if delete failed
+//  D-should call database.delete on delete
+//  D-should redirect to homepage when delete is successful
+//  D-should show error message if delete failed
 //  -should
-//  -
 
 const MOCK_ALERT_ID = 'ALERT_ID';
 const MOCK_ALERT_DATA = {
@@ -35,6 +35,8 @@ beforeEach(() => {
   db.getAlert = jest.fn(() => MOCK_ALERT_DATA);
   //@ts-ignore
   db.updateAlert = jest.fn(() => true);
+  //@ts-ignore
+  db.deleteAlert = jest.fn(() => true);
 });
 
 it('should render alert data', async () => {
@@ -68,7 +70,7 @@ it('should redirect to homepage when id is invalid', async () => {
   await waitForElementToBeRemoved(() => getByText('Edit Alert'));
 });
 it('should call database.updateAlert on edit submit', async () => {
-  let { getByText, findByText } = render(
+  let { findByText } = render(
     <MemoryRouter initialEntries={[`/alert?id=${MOCK_ALERT_ID}`]}>
       <AlertPage />
     </MemoryRouter>
@@ -78,9 +80,7 @@ it('should call database.updateAlert on edit submit', async () => {
   fireEvent.click(submitButton);
 
   //wait for the submit button to become enabled again
-  await wait(() =>
-    expect(getByText('Save changes')).not.toHaveAttribute('disabled')
-  );
+  await wait(() => expect(submitButton).not.toHaveAttribute('disabled'));
 
   expect(db.updateAlert).toHaveBeenCalledTimes(1);
   //@ts-ignore (ignore because TS gives error: "Property 'mock' does not exist on type...")
@@ -89,6 +89,7 @@ it('should call database.updateAlert on edit submit', async () => {
     MOCK_ALERT_DATA,
   ]);
 });
+
 it('should show message after edit is done', async () => {
   let { findByText } = render(
     <MemoryRouter initialEntries={[`/alert?id=${MOCK_ALERT_ID}`]}>
@@ -96,8 +97,7 @@ it('should show message after edit is done', async () => {
     </MemoryRouter>
   );
 
-  let submitButton = await findByText('Save changes');
-  fireEvent.click(submitButton);
+  fireEvent.click(await findByText('Save changes'));
 
   expect(await findByText('Successfully editted!')).toBeInTheDocument();
 });
@@ -111,8 +111,68 @@ it('should show error message if edit failed', async () => {
     </MemoryRouter>
   );
 
-  let submitButton = await findByText('Save changes');
-  fireEvent.click(submitButton);
+  fireEvent.click(await findByText('Save changes'));
+
+  expect(await findByText('Oops', { exact: false })).toBeInTheDocument();
+});
+
+it('should call database.delete on delete', async () => {
+  let { findByText, getByText } = render(
+    <MemoryRouter initialEntries={[`/alert?id=${MOCK_ALERT_ID}`]}>
+      <AlertPage />
+    </MemoryRouter>
+  );
+
+  fireEvent.click(await findByText('Delete'));
+
+  //wait for the modal to show up
+  await waitForElement(() =>
+    getByText('Are you sure you want to delete this alert?')
+  );
+  fireEvent.click(getByText('Yes, delete it'));
+
+  //wait for the redirect to homepage
+  await waitForElementToBeRemoved(() => getByText('Delete'));
+
+  expect(db.deleteAlert).toHaveBeenCalledTimes(1);
+  //@ts-ignore (ignore because TS gives error: "Property 'mock' does not exist on type...")
+  expect(db.deleteAlert.mock.calls[0][0]).toBe(MOCK_ALERT_ID);
+});
+it('should redirect to homepage when delete is successful', async () => {
+  let { findByText, getByText } = render(
+    <MemoryRouter initialEntries={[`/alert?id=${MOCK_ALERT_ID}`]}>
+      <AlertPage />
+    </MemoryRouter>
+  );
+
+  fireEvent.click(await findByText('Delete'));
+
+  //wait for the modal to show up
+  await waitForElement(() =>
+    getByText('Are you sure you want to delete this alert?')
+  );
+  fireEvent.click(getByText('Yes, delete it'));
+
+  //wait for the redirect to homepage
+  await waitForElementToBeRemoved(() => getByText('Delete'));
+});
+it('should show error message if delete failed', async () => {
+  //@ts-ignore
+  db.deleteAlert = jest.fn(() => false);
+
+  let { findByText, getByText } = render(
+    <MemoryRouter initialEntries={[`/alert?id=${MOCK_ALERT_ID}`]}>
+      <AlertPage />
+    </MemoryRouter>
+  );
+
+  fireEvent.click(await findByText('Delete'));
+
+  //wait for the modal to show up
+  await waitForElement(() =>
+    getByText('Are you sure you want to delete this alert?')
+  );
+  fireEvent.click(getByText('Yes, delete it'));
 
   expect(await findByText('Oops', { exact: false })).toBeInTheDocument();
 });
