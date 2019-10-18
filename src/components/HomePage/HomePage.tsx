@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import styles from './HomePage.module.css';
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { addAlert } from '../../database';
 import cities from '../../data/cities.json';
 import HomePageForm from '../HomePageForm';
 import SubmitError from '../SubmitError';
+import { Modal } from 'react-bootstrap';
 
 const initialFormValues = {
   city: cities[0],
@@ -13,38 +14,50 @@ const initialFormValues = {
 };
 
 export default function HomePage(props) {
-  let [alertData, setAlertData] = useState<any>(null);
+  let [alertData, setAlertData] = useState<any>({});
   let [submitError, setSubmitError] = useState(false);
+  let [showModal, setShowModal] = useState(false);
 
   async function onSubmit(formValues, { setSubmitting }) {
     setSubmitError(false);
     let id = await addAlert(formValues);
     if (id) {
       setAlertData({ id, ...formValues });
+      setShowModal(true);
     } else {
       setSubmitError(true);
     }
     setSubmitting(false);
   }
 
-  //go to success page after the alert has been created
-  if (alertData) {
-    return (
-      <Redirect
-        push
-        to={{
-          pathname: '/success',
-          state: alertData,
-        }}
-      />
-    );
-  } else {
-    return (
-      <div className={styles.homePage}>
-        <h2 className="text-center">Search Craigslist</h2>
-        <HomePageForm initialValues={initialFormValues} onSubmit={onSubmit} />
-        {submitError && <SubmitError />}
-      </div>
-    );
+  function hideModal() {
+    setShowModal(false);
   }
+
+  return (
+    <div className={styles.homePage}>
+      <h2 className="text-center">Search Craigslist</h2>
+      <HomePageForm initialValues={initialFormValues} onSubmit={onSubmit} />
+      {submitError && <SubmitError />}
+
+      <Modal show={showModal} onHide={hideModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Success!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div>
+            <p>
+              An alert has been created for <strong>{alertData.email}.</strong>
+            </p>
+            <p>
+              You will automatically receive new craigslist results in your
+              inbox according to the schedule you specified.
+            </p>
+          </div>
+          <Link to={`/alert?id=${alertData.id}`}>View/Edit this alert</Link>
+        </Modal.Body>
+        <Modal.Footer></Modal.Footer>
+      </Modal>
+    </div>
+  );
 }

@@ -3,8 +3,8 @@ import HomePage from './HomePage';
 import {
   render,
   fireEvent,
-  waitForElementToBeRemoved,
   wait,
+  waitForElement,
 } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import * as db from '../../database';
@@ -13,7 +13,7 @@ import { BrowserRouter } from 'react-router-dom';
 //tests to make:
 //  D-should call database.addAlert on submit
 //  X-should disable button on submit
-//  D-should redirect to /success after submit
+//  D-should show modal after submit
 //  D-should show error message if addAlert failed
 //  X-should re-enable submit button if addAlert failed
 //  X-should hide error message when clicking submit after a failed submit
@@ -44,11 +44,11 @@ it('should call database.addAlert on submit', async () => {
   //@ts-ignore (ignore because TS gives error: "Property 'mock' does not exist on type...")
   expect(db.addAlert.mock.calls[0]).toMatchSnapshot();
 });
-it('should redirect to /success after submit', async () => {
+it('should show modal after submit', async () => {
   //@ts-ignore
   db.addAlert = jest.fn(() => 'ALERT_ID');
 
-  let { getByText, queryByText } = render(
+  let { getByText } = render(
     <BrowserRouter>
       <HomePage />
     </BrowserRouter>
@@ -57,11 +57,8 @@ it('should redirect to /success after submit', async () => {
   let submitButton = getByText('Submit');
   fireEvent.click(submitButton);
 
-  //wait for the redirect to happen
-  await waitForElementToBeRemoved(() => getByText('Submit'));
-
-  //this is redundant but I'm not sure what else to put in this expect
-  expect(queryByText('Submit')).not.toBeInTheDocument();
+  //wait for the success modal
+  await waitForElement(() => getByText('Success!'));
 });
 it('should show error message if addAlert failed', async () => {
   let { getByText } = render(
