@@ -39,7 +39,7 @@ export async function getAlert(id) {
 export async function updateAlert(id, data) {
   console.log(`***in database updateAlert, id=${id}, data=`, data);
   await sleep(1000);
-  return false;
+  return true;
   // try {
   //    let db = firebase.firestore();
   //    await db
