@@ -4,7 +4,7 @@ import styles from './App.module.css';
 import Header from '../Header';
 import AlertPage from '../AlertPage';
 import HomePage from '../HomePage';
-import CreatePage from '../CreatePage';
+import SuccessPage from '../SuccessPage';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
       <Header />
       <section className={styles.main}>
         <Switch>
-          <Route path="/create" component={CreatePage} />
+          <Route path="/success" component={SuccessPage} />
           <Route path="/alert" component={AlertPage} />
           <Route path="/" component={HomePage} />
         </Switch>

@@ -33,7 +33,7 @@ export default function HomePage(props) {
       <Redirect
         push
         to={{
-          pathname: '/create',
+          pathname: '/success',
           state: alertData,
         }}
       />

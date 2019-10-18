@@ -1,12 +1,12 @@
 import React from 'react';
-import styles from './CreatePage.module.css';
+import styles from './SuccessPage.module.css';
 import { Link } from 'react-router-dom';
 
-export default function CreatePage(props) {
+export default function SuccessPage(props) {
   let otherProps = props.location.state;
   let { city, searchTerm, email, alertId } = otherProps;
   return (
-    <div className={styles.createPage}>
+    <div className={styles.successPage}>
       <h2>Success!</h2>
       <h4>
         A new alert has been created for <strong>{email}</strong>.

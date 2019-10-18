@@ -10,7 +10,7 @@ function sleep(ms) {
 export async function addAlert(data) {
   console.log(`***in database addAlert, data=`, data);
   await sleep(1000);
-  return '';
+  return {};
   // try {
   //   let db = firebase.firestore();
   //   let docRef = await db.collection('alerts').add(data);
