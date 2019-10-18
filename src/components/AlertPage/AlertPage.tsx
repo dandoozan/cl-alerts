@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './AlertPage.module.css';
 import { useLocation, Redirect } from 'react-router-dom';
-import DeleteButton from '../DeleteButton';
 import { updateAlert, getAlert, deleteAlert } from '../../database';
 import EditForm from '../EditForm';
 import SubmitError from '../SubmitError';
@@ -10,8 +9,9 @@ import { Button, Modal } from 'react-bootstrap';
 export default function AlertPage(props) {
   let [alertData, setAlertData] = useState<any>(null);
   let [isEditted, setIsEditted] = useState(false);
+  let [editError, setEditError] = useState(false);
   let [isDeleted, setIsDeleted] = useState(false);
-  let [submitError, setSubmitError] = useState(false);
+  let [deleteError, setDeleteError] = useState(false);
   let [invalidAlertId, setInvalidAlertId] = useState(false);
   let [showModal, setShowModal] = useState(false);
 
@@ -19,22 +19,27 @@ export default function AlertPage(props) {
   let alertId = query.get('id');
 
   async function onSubmit(formValues, { setSubmitting }) {
-    setSubmitError(false);
+    setEditError(false);
     if (await updateAlert(alertId, formValues)) {
       setIsEditted(true);
     } else {
-      setSubmitError(true);
+      setEditError(true);
     }
     setSubmitting(false);
   }
 
   async function handleDeleteClick() {
+    setDeleteError(false);
     setShowModal(true);
   }
 
   async function handleModalAccept() {
-    await deleteAlert(alertId);
-    setIsDeleted(true);
+    setShowModal(false);
+    if (await deleteAlert(alertId)) {
+      setIsDeleted(true);
+    } else {
+      setDeleteError(true);
+    }
   }
 
   function handleModalReject() {
@@ -84,10 +89,11 @@ export default function AlertPage(props) {
           <>
             <EditForm initialValues={alertData} onSubmit={onSubmit} />
             {isEditted && <div>Successfully editted!</div>}
-            {submitError && <SubmitError />}
+            {editError && <SubmitError />}
             <Button variant="danger" onClick={handleDeleteClick}>
               Delete
             </Button>
+            {deleteError && <SubmitError />}
 
             <Modal show={showModal} onHide={handleModalReject}>
               <Modal.Header closeButton>
@@ -97,14 +103,10 @@ export default function AlertPage(props) {
                 Are you sure you want to delete this alert?
               </Modal.Body>
               <Modal.Footer>
-                <Button
-                  size="lg"
-                  variant="secondary"
-                  onClick={handleModalReject}
-                >
+                <Button variant="secondary" onClick={handleModalReject}>
                   No, cancel
                 </Button>
-                <Button size="lg" variant="primary" onClick={handleModalAccept}>
+                <Button variant="primary" onClick={handleModalAccept}>
                   Yes, delete it
                 </Button>
               </Modal.Footer>
