@@ -6,12 +6,25 @@ import Input from '../Input';
 import EmailInput from '../EmailInput';
 import { Button, Form } from 'react-bootstrap';
 import cities from '../../data/cities.json';
+import { object, string } from 'yup';
+
+const schema = object({
+  city: string().required(),
+  searchTerm: string(),
+  email: string()
+    .email('Email must be a valid email')
+    .required('Email is required'),
+});
 
 export default function HomePageForm(props) {
   let { initialValues, onSubmit } = props;
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ values, handleChange, handleSubmit, isSubmitting }) => (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={schema}
+      onSubmit={onSubmit}
+    >
+      {({ values, handleChange, handleSubmit, errors, isSubmitting }) => (
         <Form onSubmit={handleSubmit}>
           <Select
             {...{
@@ -37,6 +50,7 @@ export default function HomePageForm(props) {
               name: 'email',
               value: values.email,
               handleChange,
+              error: errors.email,
             }}
           />
           <Button variant="primary" type="submit" disabled={isSubmitting}>
