@@ -6,12 +6,17 @@ import Input from '../Input';
 import EmailInput from '../EmailInput';
 import { Button, Form } from 'react-bootstrap';
 import cities from '../../data/cities.json';
+import schema from '../../formSchema';
 
 export default function EditForm(props) {
   let { initialValues, onSubmit } = props;
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ values, handleChange, handleSubmit, isSubmitting }) => (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={schema}
+      onSubmit={onSubmit}
+    >
+      {({ values, handleChange, handleSubmit, errors, isSubmitting }) => (
         <Form onSubmit={handleSubmit}>
           <Select
             {...{
@@ -36,6 +41,7 @@ export default function EditForm(props) {
               name: 'email',
               value: values.email,
               handleChange,
+              error: errors.email,
             }}
           />
           <Button variant="primary" type="submit" disabled={isSubmitting}>

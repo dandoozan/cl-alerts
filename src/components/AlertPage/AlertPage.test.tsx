@@ -21,158 +21,198 @@ import * as db from '../../database';
 //  D-should call database.delete on delete
 //  D-should redirect to homepage when delete is successful
 //  D-should show error message if delete failed
+//  D-should show error if email is missing
+//  D-should show error if email is not valid
 //  -should
 
-const MOCK_ALERT_ID = 'ALERT_ID';
-const MOCK_ALERT_DATA = {
-  searchTerm: 'test',
-};
+describe('AlertPage', () => {
+  const MOCK_ALERT_ID = 'ALERT_ID';
+  const MOCK_ALERT_DATA = {
+    city: 'Phoenix',
+    email: 'test@example.com',
+  };
 
-jest.mock('../../database');
+  jest.mock('../../database');
 
-beforeEach(() => {
-  //@ts-ignore
-  db.getAlert = jest.fn(() => MOCK_ALERT_DATA);
-  //@ts-ignore
-  db.updateAlert = jest.fn(() => true);
-  //@ts-ignore
-  db.deleteAlert = jest.fn(() => true);
-});
+  beforeEach(() => {
+    //@ts-ignore
+    db.getAlert = jest.fn(() => MOCK_ALERT_DATA);
+    //@ts-ignore
+    db.updateAlert = jest.fn(() => true);
+    //@ts-ignore
+    db.deleteAlert = jest.fn(() => true);
+  });
 
-it('should render alert data', async () => {
-  let { findByLabelText } = render(
-    <MemoryRouter initialEntries={[`/alert?id=${MOCK_ALERT_ID}`]}>
-      <AlertPage />
-    </MemoryRouter>
-  );
+  it('should render alert data', async () => {
+    let { findByLabelText } = render(
+      <MemoryRouter initialEntries={[`/alert?id=${MOCK_ALERT_ID}`]}>
+        <AlertPage />
+      </MemoryRouter>
+    );
 
-  //@ts-ignore
-  expect((await findByLabelText('Search Term')).value).toBe(
-    MOCK_ALERT_DATA.searchTerm
-  );
-});
+    //@ts-ignore
+    expect((await findByLabelText('Email')).value).toBe(MOCK_ALERT_DATA.email);
+  });
 
-it('should redirect to homepage when id is invalid', async () => {
-  //return undefined to mimic that getAlert failed
-  //@ts-ignore
-  db.getAlert = jest.fn();
+  it('should redirect to homepage when id is invalid', async () => {
+    //return undefined to mimic that getAlert failed
+    //@ts-ignore
+    db.getAlert = jest.fn();
 
-  let { getByText } = render(
-    <MemoryRouter initialEntries={[`/alert?id=${MOCK_ALERT_ID}`]}>
-      <AlertPage />
-    </MemoryRouter>
-  );
+    let { getByText } = render(
+      <MemoryRouter initialEntries={[`/alert?id=${MOCK_ALERT_ID}`]}>
+        <AlertPage />
+      </MemoryRouter>
+    );
 
-  //first, make sure that "Edit Alert" is in the document as expected
-  expect(getByText('Edit Alert')).toBeInTheDocument();
+    //first, make sure that "Edit Alert" is in the document as expected
+    expect(getByText('Edit Alert')).toBeInTheDocument();
 
-  //now, make sure it's removed, which means the redirect happened
-  await waitForElementToBeRemoved(() => getByText('Edit Alert'));
-});
-it('should call database.updateAlert on edit submit', async () => {
-  let { findByText } = render(
-    <MemoryRouter initialEntries={[`/alert?id=${MOCK_ALERT_ID}`]}>
-      <AlertPage />
-    </MemoryRouter>
-  );
+    //now, make sure it's removed, which means the redirect happened
+    await waitForElementToBeRemoved(() => getByText('Edit Alert'));
+  });
+  it('should call database.updateAlert on edit submit', async () => {
+    let { findByText } = render(
+      <MemoryRouter initialEntries={[`/alert?id=${MOCK_ALERT_ID}`]}>
+        <AlertPage />
+      </MemoryRouter>
+    );
 
-  let submitButton = await findByText('Save changes');
-  fireEvent.click(submitButton);
+    let submitButton = await findByText('Save changes');
+    fireEvent.click(submitButton);
 
-  //wait for the submit button to become enabled again
-  await wait(() => expect(submitButton).not.toHaveAttribute('disabled'));
+    //wait for the submit button to become enabled again
+    await wait(() => expect(submitButton).not.toHaveAttribute('disabled'));
 
-  expect(db.updateAlert).toHaveBeenCalledTimes(1);
-  //@ts-ignore (ignore because TS gives error: "Property 'mock' does not exist on type...")
-  expect(db.updateAlert.mock.calls[0]).toMatchObject([
-    MOCK_ALERT_ID,
-    MOCK_ALERT_DATA,
-  ]);
-});
+    expect(db.updateAlert).toHaveBeenCalledTimes(1);
+    //@ts-ignore (ignore because TS gives error: "Property 'mock' does not exist on type...")
+    expect(db.updateAlert.mock.calls[0]).toMatchObject([
+      MOCK_ALERT_ID,
+      MOCK_ALERT_DATA,
+    ]);
+  });
 
-it('should show message after edit is done', async () => {
-  let { findByText } = render(
-    <MemoryRouter initialEntries={[`/alert?id=${MOCK_ALERT_ID}`]}>
-      <AlertPage />
-    </MemoryRouter>
-  );
+  it('should show message after edit is done', async () => {
+    let { findByText } = render(
+      <MemoryRouter initialEntries={[`/alert?id=${MOCK_ALERT_ID}`]}>
+        <AlertPage />
+      </MemoryRouter>
+    );
 
-  fireEvent.click(await findByText('Save changes'));
+    fireEvent.click(await findByText('Save changes'));
 
-  expect(await findByText('Successfully editted!')).toBeInTheDocument();
-});
-it('should show error message if edit failed', async () => {
-  //@ts-ignore
-  db.updateAlert = jest.fn(() => false);
+    expect(await findByText('Successfully editted!')).toBeInTheDocument();
+  });
+  it('should show error message if edit failed', async () => {
+    //@ts-ignore
+    db.updateAlert = jest.fn(() => false);
 
-  let { findByText } = render(
-    <MemoryRouter initialEntries={[`/alert?id=${MOCK_ALERT_ID}`]}>
-      <AlertPage />
-    </MemoryRouter>
-  );
+    let { findByText } = render(
+      <MemoryRouter initialEntries={[`/alert?id=${MOCK_ALERT_ID}`]}>
+        <AlertPage />
+      </MemoryRouter>
+    );
 
-  fireEvent.click(await findByText('Save changes'));
+    fireEvent.click(await findByText('Save changes'));
 
-  expect(await findByText('Oops', { exact: false })).toBeInTheDocument();
-});
+    expect(await findByText('Oops', { exact: false })).toBeInTheDocument();
+  });
 
-it('should call database.delete on delete', async () => {
-  let { findByText, getByText } = render(
-    <MemoryRouter initialEntries={[`/alert?id=${MOCK_ALERT_ID}`]}>
-      <AlertPage />
-    </MemoryRouter>
-  );
+  it('should call database.delete on delete', async () => {
+    let { findByText, getByText } = render(
+      <MemoryRouter initialEntries={[`/alert?id=${MOCK_ALERT_ID}`]}>
+        <AlertPage />
+      </MemoryRouter>
+    );
 
-  fireEvent.click(await findByText('Delete'));
+    fireEvent.click(await findByText('Delete'));
 
-  //wait for the modal to show up
-  await waitForElement(() =>
-    getByText('Are you sure you want to delete this alert?')
-  );
-  fireEvent.click(getByText('Yes, delete it'));
+    //wait for the modal to show up
+    await waitForElement(() =>
+      getByText('Are you sure you want to delete this alert?')
+    );
+    fireEvent.click(getByText('Yes, delete it'));
 
-  //wait for the redirect to homepage
-  await waitForElementToBeRemoved(() => getByText('Delete'));
+    //wait for the redirect to homepage
+    await waitForElementToBeRemoved(() => getByText('Delete'));
 
-  expect(db.deleteAlert).toHaveBeenCalledTimes(1);
-  //@ts-ignore (ignore because TS gives error: "Property 'mock' does not exist on type...")
-  expect(db.deleteAlert.mock.calls[0][0]).toBe(MOCK_ALERT_ID);
-});
-it('should redirect to homepage when delete is successful', async () => {
-  let { findByText, getByText } = render(
-    <MemoryRouter initialEntries={[`/alert?id=${MOCK_ALERT_ID}`]}>
-      <AlertPage />
-    </MemoryRouter>
-  );
+    expect(db.deleteAlert).toHaveBeenCalledTimes(1);
+    //@ts-ignore (ignore because TS gives error: "Property 'mock' does not exist on type...")
+    expect(db.deleteAlert.mock.calls[0][0]).toBe(MOCK_ALERT_ID);
+  });
+  it('should redirect to homepage when delete is successful', async () => {
+    let { findByText, getByText } = render(
+      <MemoryRouter initialEntries={[`/alert?id=${MOCK_ALERT_ID}`]}>
+        <AlertPage />
+      </MemoryRouter>
+    );
 
-  fireEvent.click(await findByText('Delete'));
+    fireEvent.click(await findByText('Delete'));
 
-  //wait for the modal to show up
-  await waitForElement(() =>
-    getByText('Are you sure you want to delete this alert?')
-  );
-  fireEvent.click(getByText('Yes, delete it'));
+    //wait for the modal to show up
+    await waitForElement(() =>
+      getByText('Are you sure you want to delete this alert?')
+    );
+    fireEvent.click(getByText('Yes, delete it'));
 
-  //wait for the redirect to homepage
-  await waitForElementToBeRemoved(() => getByText('Delete'));
-});
-it('should show error message if delete failed', async () => {
-  //@ts-ignore
-  db.deleteAlert = jest.fn(() => false);
+    //wait for the redirect to homepage
+    await waitForElementToBeRemoved(() => getByText('Delete'));
+  });
+  it('should show error message if delete failed', async () => {
+    //@ts-ignore
+    db.deleteAlert = jest.fn(() => false);
 
-  let { findByText, getByText } = render(
-    <MemoryRouter initialEntries={[`/alert?id=${MOCK_ALERT_ID}`]}>
-      <AlertPage />
-    </MemoryRouter>
-  );
+    let { findByText, getByText } = render(
+      <MemoryRouter initialEntries={[`/alert?id=${MOCK_ALERT_ID}`]}>
+        <AlertPage />
+      </MemoryRouter>
+    );
 
-  fireEvent.click(await findByText('Delete'));
+    fireEvent.click(await findByText('Delete'));
 
-  //wait for the modal to show up
-  await waitForElement(() =>
-    getByText('Are you sure you want to delete this alert?')
-  );
-  fireEvent.click(getByText('Yes, delete it'));
+    //wait for the modal to show up
+    await waitForElement(() =>
+      getByText('Are you sure you want to delete this alert?')
+    );
+    fireEvent.click(getByText('Yes, delete it'));
 
-  expect(await findByText('Oops', { exact: false })).toBeInTheDocument();
+    expect(await findByText('Oops', { exact: false })).toBeInTheDocument();
+  });
+
+  it('should show error if email is missing', async () => {
+    let { findByLabelText, findByText } = render(
+      <MemoryRouter initialEntries={[`/alert?id=${MOCK_ALERT_ID}`]}>
+        <AlertPage />
+      </MemoryRouter>
+    );
+
+    //remove email
+    //@ts-ignore
+    fireEvent.change(await findByLabelText('Email'), {
+      target: { value: '' },
+    });
+
+    //click submit
+    fireEvent.click(await findByText('Save changes'));
+
+    expect(await findByText('Email is required')).toBeInTheDocument();
+  });
+  it('should show error if email is not valid', async () => {
+    let { findByLabelText, findByText } = render(
+      <MemoryRouter initialEntries={[`/alert?id=${MOCK_ALERT_ID}`]}>
+        <AlertPage />
+      </MemoryRouter>
+    );
+
+    //set email to an invalid email address
+    //@ts-ignore
+    fireEvent.change(await findByLabelText('Email'), {
+      target: { value: 'invalidEmailAddress' },
+    });
+
+    //click submit
+    fireEvent.click(await findByText('Save changes'));
+
+    expect(await findByText('Email must be a valid email')).toBeInTheDocument();
+  });
 });

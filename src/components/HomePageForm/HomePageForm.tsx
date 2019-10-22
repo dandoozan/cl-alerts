@@ -6,15 +6,7 @@ import Input from '../Input';
 import EmailInput from '../EmailInput';
 import { Button, Form } from 'react-bootstrap';
 import cities from '../../data/cities.json';
-import { object, string } from 'yup';
-
-const schema = object({
-  city: string().required(),
-  searchTerm: string(),
-  email: string()
-    .email('Email must be a valid email')
-    .required('Email is required'),
-});
+import schema from '../../formSchema';
 
 export default function HomePageForm(props) {
   let { initialValues, onSubmit } = props;
