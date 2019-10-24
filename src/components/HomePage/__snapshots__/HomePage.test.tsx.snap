@@ -5,6 +5,7 @@ Array [
   Object {
     "city": "Phoenix",
     "email": "test@example.com",
+    "minPrice": "",
     "searchTerm": "",
   },
 ]

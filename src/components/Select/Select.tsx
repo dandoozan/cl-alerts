@@ -2,13 +2,13 @@ import React from 'react';
 import { Form, Col, Row } from 'react-bootstrap';
 
 export default function Select(props) {
-  let { label, name, options, value, handleChange } = props;
+  let { label, name, options, value, handleChange, labelSize } = props;
   return (
     <Form.Group as={Row} controlId={name}>
-      <Form.Label column sm="2">
+      <Form.Label className="text-right" column sm={labelSize}>
         {label}
       </Form.Label>
-      <Col sm="10">
+      <Col sm={12 - labelSize}>
         <Form.Control
           as="select"
           name={name}

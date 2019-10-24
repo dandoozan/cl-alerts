@@ -21,6 +21,7 @@ export default function EditForm(props) {
           <Select
             {...{
               label: 'City',
+              labelSize: 2,
               name: 'city',
               options: cities,
               value: values.city,
@@ -30,14 +31,26 @@ export default function EditForm(props) {
           <Input
             {...{
               label: 'Search Term',
+              labelSize: 2,
               name: 'searchTerm',
               value: values.searchTerm,
               handleChange,
             }}
           />
+          <Input
+            {...{
+              label: 'Min Price',
+              labelSize: 2,
+              name: 'minPrice',
+              value: values.minPrice,
+              handleChange,
+              error: errors.minPrice,
+            }}
+          />
           <EmailInput
             {...{
               label: 'Email',
+              labelSize: 2,
               name: 'email',
               value: values.email,
               handleChange,

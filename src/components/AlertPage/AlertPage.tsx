@@ -5,6 +5,7 @@ import { updateAlert, getAlert, deleteAlert } from '../../database';
 import EditForm from '../EditForm';
 import SubmitError from '../SubmitError';
 import { Button, Modal } from 'react-bootstrap';
+import defaultValues from '../../formDefaultValues';
 
 export default function AlertPage(props) {
   let [alertData, setAlertData] = useState<any>(null);
@@ -55,7 +56,7 @@ export default function AlertPage(props) {
         let data = await getAlert(alertId);
         if (data) {
           if (!ignore) {
-            setAlertData(data);
+            setAlertData({ ...defaultValues, ...data });
           }
         } else {
           setInvalidAlertId(true);

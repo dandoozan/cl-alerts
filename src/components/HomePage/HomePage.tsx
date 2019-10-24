@@ -2,16 +2,10 @@ import React, { useState } from 'react';
 import styles from './HomePage.module.css';
 import { Link } from 'react-router-dom';
 import { addAlert } from '../../database';
-import cities from '../../data/cities.json';
 import HomePageForm from '../HomePageForm';
 import SubmitError from '../SubmitError';
 import { Modal } from 'react-bootstrap';
-
-const initialFormValues = {
-  city: cities[0],
-  searchTerm: '',
-  email: '',
-};
+import defaultValues from '../../formDefaultValues';
 
 export default function HomePage(props) {
   let [alertData, setAlertData] = useState<any>({});
@@ -37,7 +31,7 @@ export default function HomePage(props) {
   return (
     <div className={styles.homePage}>
       <h2 className="text-center">Search Craigslist</h2>
-      <HomePageForm initialValues={initialFormValues} onSubmit={onSubmit} />
+      <HomePageForm initialValues={defaultValues} onSubmit={onSubmit} />
       {submitError && <SubmitError />}
 
       <Modal show={showModal} onHide={hideModal}>
