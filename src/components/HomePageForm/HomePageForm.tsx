@@ -24,6 +24,7 @@ export default function HomePageForm(props) {
     <Formik
       initialValues={initialValues}
       validationSchema={schema}
+      validateOnChange={false}
       onSubmit={onSubmit}
     >
       {({ values, handleChange, handleSubmit, errors, isSubmitting }) => (
