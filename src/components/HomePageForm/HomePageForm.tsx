@@ -11,6 +11,7 @@ import { SlideDown } from 'react-slidedown';
 import 'react-slidedown/lib/slidedown.css';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import Checkbox from '../Checkbox';
 
 export default function HomePageForm(props) {
   let { initialValues, onSubmit } = props;
@@ -46,6 +47,15 @@ export default function HomePageForm(props) {
               name: 'searchTerm',
               value: values.searchTerm,
               placeholder: '(Optional) e.g. dining table',
+              handleChange,
+            }}
+          />
+          <Checkbox
+            {...{
+              label: 'Search title only',
+              size: 10,
+              name: 'titleOnly',
+              value: values.titleOnly,
               handleChange,
             }}
           />

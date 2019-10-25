@@ -7,6 +7,7 @@ import EmailInput from '../EmailInput';
 import { Button, Form } from 'react-bootstrap';
 import cities from '../../data/cities.json';
 import { schema } from '../../formFields';
+import Checkbox from '../Checkbox';
 
 export default function EditForm(props) {
   let { initialValues, onSubmit } = props;
@@ -38,6 +39,16 @@ export default function EditForm(props) {
               handleChange,
             }}
           />
+          <Checkbox
+            {...{
+              label: 'Search title only',
+              size: 10,
+              name: 'titleOnly',
+              value: values.titleOnly,
+              handleChange,
+            }}
+          />
+          <br />
           <Input
             {...{
               label: 'Min Price',
