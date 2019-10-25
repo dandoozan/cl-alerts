@@ -5,7 +5,7 @@ import { addAlert } from '../../database';
 import HomePageForm from '../HomePageForm';
 import SubmitError from '../SubmitError';
 import { Modal } from 'react-bootstrap';
-import defaultValues from '../../formDefaultValues';
+import { defaultValues } from '../../formFields';
 
 export default function HomePage(props) {
   let [alertData, setAlertData] = useState<any>({});

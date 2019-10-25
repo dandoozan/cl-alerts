@@ -5,7 +5,7 @@ import { updateAlert, getAlert, deleteAlert } from '../../database';
 import EditForm from '../EditForm';
 import SubmitError from '../SubmitError';
 import { Button, Modal } from 'react-bootstrap';
-import defaultValues from '../../formDefaultValues';
+import { defaultValues } from '../../formFields';
 
 export default function AlertPage(props) {
   let [alertData, setAlertData] = useState<any>(null);

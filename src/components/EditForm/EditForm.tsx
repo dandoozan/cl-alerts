@@ -6,7 +6,7 @@ import Input from '../Input';
 import EmailInput from '../EmailInput';
 import { Button, Form } from 'react-bootstrap';
 import cities from '../../data/cities.json';
-import schema from '../../formSchema';
+import { schema } from '../../formFields';
 
 export default function EditForm(props) {
   let { initialValues, onSubmit } = props;

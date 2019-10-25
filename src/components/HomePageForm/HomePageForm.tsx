@@ -6,7 +6,7 @@ import Input from '../Input';
 import EmailInput from '../EmailInput';
 import { Button, Form } from 'react-bootstrap';
 import cities from '../../data/cities.json';
-import schema from '../../formSchema';
+import { schema } from '../../formFields';
 import { SlideDown } from 'react-slidedown';
 import 'react-slidedown/lib/slidedown.css';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
