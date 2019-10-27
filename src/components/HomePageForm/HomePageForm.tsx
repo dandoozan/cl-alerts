@@ -6,16 +6,19 @@ import Input from '../Input';
 import EmailInput from '../EmailInput';
 import { Button, Form } from 'react-bootstrap';
 import cities from '../../data/cities.json';
+import days from '../../data/days.json';
 import { schema } from '../../formFields';
 import { SlideDown } from 'react-slidedown';
 import 'react-slidedown/lib/slidedown.css';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import Checkbox from '../Checkbox';
+import ButtonGroup from '../ButtonGroup';
 
 export default function HomePageForm(props) {
   let { initialValues, onSubmit } = props;
   let [showMoreOptions, setShowMoreOptions] = useState(true);
+  let [selectedDays, setSelectedDays] = useState(initialValues.days);
 
   function handleMoreOptionsClick(e) {
     setShowMoreOptions(!showMoreOptions);
@@ -26,7 +29,9 @@ export default function HomePageForm(props) {
       initialValues={initialValues}
       validationSchema={schema}
       validateOnChange={false}
-      onSubmit={onSubmit}
+      onSubmit={(formValues, ...rest) => {
+        onSubmit({ ...formValues, days: selectedDays }, ...rest);
+      }}
     >
       {({ values, handleChange, handleSubmit, errors, isSubmitting }) => (
         <Form onSubmit={handleSubmit}>
@@ -83,6 +88,13 @@ export default function HomePageForm(props) {
             )}
           </SlideDown>
           <hr />
+          <ButtonGroup
+            {...{
+              values: days,
+              initialValues: selectedDays,
+              setValues: setSelectedDays,
+            }}
+          />
           <EmailInput
             {...{
               label: 'Email',

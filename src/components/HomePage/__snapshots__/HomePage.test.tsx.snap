@@ -4,9 +4,19 @@ exports[`HomePage should call database.addAlert on submit 1`] = `
 Array [
   Object {
     "city": "Phoenix",
+    "days": Array [
+      "Su",
+      "M",
+      "T",
+      "W",
+      "R",
+      "F",
+      "Sa",
+    ],
     "email": "test@example.com",
     "minPrice": "",
     "searchTerm": "",
+    "titleOnly": false,
   },
 ]
 `;

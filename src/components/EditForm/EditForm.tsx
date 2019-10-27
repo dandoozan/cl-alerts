@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import styles from './EditForm.module.css';
 import { Formik } from 'formik';
 import Select from '../Select';
@@ -6,17 +6,23 @@ import Input from '../Input';
 import EmailInput from '../EmailInput';
 import { Button, Form } from 'react-bootstrap';
 import cities from '../../data/cities.json';
+import days from '../../data/days.json';
 import { schema } from '../../formFields';
 import Checkbox from '../Checkbox';
+import ButtonGroup from '../ButtonGroup';
 
 export default function EditForm(props) {
   let { initialValues, onSubmit } = props;
+  let [selectedDays, setSelectedDays] = useState(initialValues.days);
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={schema}
       validateOnChange={false}
-      onSubmit={onSubmit}
+      onSubmit={(formValues, ...rest) => {
+        onSubmit({ ...formValues, days: selectedDays }, ...rest);
+      }}
     >
       {({ values, handleChange, handleSubmit, errors, isSubmitting }) => (
         <Form onSubmit={handleSubmit}>
@@ -57,6 +63,15 @@ export default function EditForm(props) {
               value: values.minPrice,
               handleChange,
               error: errors.minPrice,
+            }}
+          />
+          <ButtonGroup
+            {...{
+              values: days,
+              initialValues: selectedDays,
+              setValues: setSelectedDays,
+              label: 'Days',
+              labelSize: 2,
             }}
           />
           <EmailInput

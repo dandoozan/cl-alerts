@@ -1,5 +1,6 @@
 import { object, string, number, boolean } from 'yup';
 import cities from './data/cities.json';
+import days from './data/days.json';
 
 export const schema = object({
   city: string().required(),
@@ -21,5 +22,6 @@ export const defaultValues = {
   searchTerm: '',
   titleOnly: false,
   minPrice: '',
+  days,
   email: '',
 };
