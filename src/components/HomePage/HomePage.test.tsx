@@ -13,13 +13,10 @@ import { BrowserRouter } from 'react-router-dom';
 
 //tests to make:
 //  D-should call database.addAlert on submit
-//  X-should disable button on submit
 //  D-should show modal after submit
 //  D-should show error message if addAlert failed
 //  X-should re-enable submit button if addAlert failed
 //  X-should hide error message when clicking submit after a failed submit
-//  D-should show error if email is missing
-//  D-should show error if email is not valid
 //  -should
 
 describe('HomePage', () => {
@@ -96,34 +93,5 @@ describe('HomePage', () => {
     await wait(() => expect(submitButton).not.toHaveAttribute('disabled'));
 
     expect(getByText('Oops', { exact: false })).toBeInTheDocument();
-  });
-  it('should show error if email is missing', async () => {
-    let { getByText, findByText } = render(
-      <BrowserRouter>
-        <HomePage />
-      </BrowserRouter>
-    );
-
-    //click submit
-    fireEvent.click(getByText('Submit'));
-
-    expect(await findByText('Email is required')).toBeInTheDocument();
-  });
-  it('should show error if email is not valid', async () => {
-    let { getByLabelText, getByText, findByText } = render(
-      <BrowserRouter>
-        <HomePage />
-      </BrowserRouter>
-    );
-
-    //@ts-ignore
-    fireEvent.change(getByLabelText('Email'), {
-      target: { value: 'invalidEmailAddress' },
-    });
-
-    //click submit
-    fireEvent.click(getByText('Submit'));
-
-    expect(await findByText('Email must be a valid email')).toBeInTheDocument();
   });
 });
