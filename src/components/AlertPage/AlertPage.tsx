@@ -73,11 +73,18 @@ export default function AlertPage(props) {
 
   //Make the successful edit message hide after some time
   useEffect(() => {
+    let ignore = false;
+
     if (isEditted) {
       setTimeout(() => {
-        setIsEditted(false);
+        if (!ignore) {
+          setIsEditted(false);
+        }
       }, 1000);
     }
+    return () => {
+      ignore = true;
+    };
   }, [isEditted]);
 
   if (invalidAlertId || isDeleted) {
