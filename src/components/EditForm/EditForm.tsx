@@ -80,6 +80,16 @@ export default function EditForm(props) {
               error: errors.minPrice,
             }}
           />
+          <Input
+            {...{
+              label: 'Max Price',
+              labelSize: 2,
+              name: 'maxPrice',
+              value: values.maxPrice,
+              handleChange,
+              error: errors.maxPrice,
+            }}
+          />
           <ButtonGroup
             {...{
               values: days,

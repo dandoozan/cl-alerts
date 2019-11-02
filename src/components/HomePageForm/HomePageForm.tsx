@@ -114,6 +114,17 @@ export default function HomePageForm(props) {
                     error: errors.minPrice,
                   }}
                 />
+                <Input
+                  {...{
+                    label: 'Max Price',
+                    labelSize: 5,
+                    name: 'maxPrice',
+                    value: values.maxPrice,
+                    placeholder: 'e.g. 1500',
+                    handleChange,
+                    error: errors.maxPrice,
+                  }}
+                />
               </div>
             )}
           </SlideDown>

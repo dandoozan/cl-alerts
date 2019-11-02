@@ -12,6 +12,10 @@ export const schema = object({
     .typeError('Price must be a number')
     .integer('Price must be an integer')
     .min(0, 'Price must be a positive integer'),
+  maxPrice: number()
+    .typeError('Price must be a number')
+    .integer('Price must be an integer')
+    .min(0, 'Price must be a positive integer'),
   email: string()
     .email('Email must be a valid email')
     .required('Email is required'),
@@ -25,6 +29,7 @@ export const defaultValues = {
   searchTerm: '',
   titleOnly: false,
   minPrice: '',
+  maxPrice: '',
   days,
   email: '',
 };

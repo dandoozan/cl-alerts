@@ -15,6 +15,7 @@ Array [
       "Sa",
     ],
     "email": "test@example.com",
+    "maxPrice": "",
     "minPrice": "",
     "searchTerm": "",
     "titleOnly": false,
