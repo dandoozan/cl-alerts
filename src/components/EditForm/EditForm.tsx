@@ -6,6 +6,7 @@ import Input from '../Input';
 import EmailInput from '../EmailInput';
 import { Button, Form } from 'react-bootstrap';
 import cities from '../../data/cities.json';
+import categories from '../../data/categories.json';
 import days from '../../data/days.json';
 import { schema } from '../../formFields';
 import Checkbox from '../Checkbox';
@@ -37,6 +38,16 @@ export default function EditForm(props) {
               name: 'city',
               options: cities,
               value: values.city,
+              handleChange,
+            }}
+          />
+          <Select
+            {...{
+              label: 'Category',
+              labelSize: 2,
+              name: 'category',
+              options: categories,
+              value: values.category,
               handleChange,
             }}
           />

@@ -1,9 +1,11 @@
 import { object, string, number, boolean } from 'yup';
 import cities from './data/cities.json';
+import categories from './data/categories.json';
 import days from './data/days.json';
 
 export const schema = object({
   city: string().required(),
+  category: string().required(),
   searchTerm: string(),
   titleOnly: boolean(),
   minPrice: number()
@@ -19,6 +21,7 @@ export const schema = object({
 //have to define the form fields in one place)
 export const defaultValues = {
   city: cities[0],
+  category: categories[0],
   searchTerm: '',
   titleOnly: false,
   minPrice: '',

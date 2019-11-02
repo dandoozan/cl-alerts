@@ -3,6 +3,7 @@
 exports[`HomePage should call database.addAlert on submit 1`] = `
 Array [
   Object {
+    "category": "All categories",
     "city": "Phoenix",
     "days": Array [
       "Su",
