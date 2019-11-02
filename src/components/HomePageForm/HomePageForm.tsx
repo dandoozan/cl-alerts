@@ -14,14 +14,33 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import Checkbox from '../Checkbox';
 import ButtonGroup from '../ButtonGroup';
+import Radios from '../Radios';
+
+enum DAY_RADIO_OPTIONS {
+  everyDay,
+  custom,
+}
 
 export default function HomePageForm(props) {
   let { initialValues, onSubmit } = props;
   let [showMoreOptions, setShowMoreOptions] = useState(true);
   let [selectedDays, setSelectedDays] = useState(initialValues.days);
+  let [daysOption, setDaysOption] = useState(DAY_RADIO_OPTIONS.everyDay);
 
   function handleMoreOptionsClick(e) {
     setShowMoreOptions(!showMoreOptions);
+  }
+
+  function handleEveryDayRadioChange(e) {
+    setDaysOption(DAY_RADIO_OPTIONS.everyDay);
+    setSelectedDays(days);
+  }
+  function handleCustomRadioChange(e) {
+    setDaysOption(DAY_RADIO_OPTIONS.custom);
+  }
+  function handleDaysChange(newDays) {
+    setDaysOption(DAY_RADIO_OPTIONS.custom);
+    setSelectedDays(newDays);
   }
 
   return (
@@ -88,11 +107,27 @@ export default function HomePageForm(props) {
             )}
           </SlideDown>
           <hr />
+          <Radios
+            {...{
+              options: [
+                {
+                  label: 'Every day',
+                  handleChange: handleEveryDayRadioChange,
+                },
+                {
+                  label: 'Custom',
+                  handleChange: handleCustomRadioChange,
+                },
+              ],
+              name: 'dayRadios',
+              selectedIndex: daysOption,
+            }}
+          />
           <ButtonGroup
             {...{
               values: days,
               initialValues: selectedDays,
-              setValues: setSelectedDays,
+              handleChange: handleDaysChange,
             }}
           />
           <EmailInput

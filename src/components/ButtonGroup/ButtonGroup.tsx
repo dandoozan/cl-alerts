@@ -9,7 +9,7 @@ import {
 import Label from '../Label';
 
 export default function ButtonGroup(props) {
-  let { values, initialValues, setValues, label, labelSize } = props;
+  let { values, initialValues, handleChange, label, labelSize } = props;
   labelSize = labelSize || 0;
   return (
     <Form.Group as={Row}>
@@ -18,7 +18,7 @@ export default function ButtonGroup(props) {
         <ToggleButtonGroup
           type="checkbox"
           value={initialValues}
-          onChange={vals => setValues(vals)}
+          onChange={handleChange}
         >
           {values.map(value => (
             <ToggleButton key={value} value={value}>

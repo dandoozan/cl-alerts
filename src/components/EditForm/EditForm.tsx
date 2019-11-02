@@ -15,6 +15,10 @@ export default function EditForm(props) {
   let { initialValues, onSubmit } = props;
   let [selectedDays, setSelectedDays] = useState(initialValues.days);
 
+  function handleDaysChange(newDays) {
+    setSelectedDays(newDays);
+  }
+
   return (
     <Formik
       initialValues={initialValues}
@@ -69,7 +73,7 @@ export default function EditForm(props) {
             {...{
               values: days,
               initialValues: selectedDays,
-              setValues: setSelectedDays,
+              handleChange: handleDaysChange,
               label: 'Days',
               labelSize: 2,
             }}
