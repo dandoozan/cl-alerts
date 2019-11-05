@@ -1,7 +1,7 @@
 .app {
   background: #333;
   display: grid;
-  grid-template-columns: auto minmax(auto, 800px) auto;
+  grid-template-columns: auto minmax(auto, 50em) auto;
   column-gap: 1em;
   grid-template-areas:
     '. header .'
@@ -14,4 +14,9 @@
   background: #edf0f5;
   padding: 3em 1em;
   border-radius: 1em;
+}
+
+.inner {
+  max-width: 40em;
+  margin: 0 auto;
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import styles from './HomePageForm.module.css';
+import styles from './HomePageForm.module.css';
 import { Formik } from 'formik';
 import Select from '../Select';
 import Input from '../Input';
@@ -58,7 +58,7 @@ export default function HomePageForm(props) {
           <Select
             {...{
               label: 'City',
-              labelSize: 2,
+              labelSize: 3,
               name: 'city',
               options: cities,
               value: values.city,
@@ -68,7 +68,7 @@ export default function HomePageForm(props) {
           <Select
             {...{
               label: 'Category',
-              labelSize: 2,
+              labelSize: 3,
               name: 'category',
               options: categories,
               value: values.category,
@@ -78,7 +78,7 @@ export default function HomePageForm(props) {
           <Input
             {...{
               label: 'Search Term',
-              labelSize: 2,
+              labelSize: 3,
               name: 'searchTerm',
               value: values.searchTerm,
               placeholder: '(Optional) e.g. dining table',
@@ -88,7 +88,7 @@ export default function HomePageForm(props) {
           <Checkbox
             {...{
               label: 'Search title only',
-              size: 10,
+              size: 9,
               name: 'titleOnly',
               value: values.titleOnly,
               handleChange,
@@ -128,43 +128,59 @@ export default function HomePageForm(props) {
               </div>
             )}
           </SlideDown>
-          <hr />
-          <Radios
-            {...{
-              options: [
-                {
-                  label: 'Every day',
-                  handleChange: handleEveryDayRadioChange,
-                },
-                {
-                  label: 'Custom',
-                  handleChange: handleCustomRadioChange,
-                },
-              ],
-              name: 'dayRadios',
-              selectedIndex: daysOption,
-            }}
-          />
-          <ButtonGroup
-            {...{
-              values: days,
-              initialValues: selectedDays,
-              handleChange: handleDaysChange,
-            }}
-          />
-          <EmailInput
-            {...{
-              label: 'Email',
-              labelSize: 2,
-              name: 'email',
-              value: values.email,
-              handleChange,
-              error: errors.email,
-            }}
-          />
-          <Button variant="primary" type="submit" disabled={isSubmitting}>
-            Submit
-          </Button>
+          <hr className={styles.hr} />
+          <div className={styles.alertSchedule}>
+            <h4>Set alert schedule</h4>
+            <div className={styles.innerAlertSchedule}>
+              <Radios
+                {...{
+                  label: 'Days:',
+                  options: [
+                    {
+                      label: 'Every day',
+                      handleChange: handleEveryDayRadioChange,
+                    },
+                    {
+                      label: 'Custom',
+                      handleChange: handleCustomRadioChange,
+                    },
+                  ],
+                  name: 'dayRadios',
+                  selectedIndex: daysOption,
+                }}
+              />
+              <ButtonGroup
+                {...{
+                  values: days,
+                  initialValues: selectedDays,
+                  handleChange: handleDaysChange,
+                }}
+              />
+            </div>
+          </div>
+          <div className={styles.sendResultsTo}>
+            <h4>Send results to...</h4>
+            <EmailInput
+              {...{
+                label: 'Email',
+                labelSize: 3,
+                name: 'email',
+                value: values.email,
+                handleChange,
+                error: errors.email,
+              }}
+            />
+          </div>
+          <div className={styles.submit}>
+            <Button
+              variant="primary"
+              size="lg"
+              type="submit"
+              disabled={isSubmitting}
+            >
+              Submit
+            </Button>
+          </div>
         </Form>
       )}
     </Formik>

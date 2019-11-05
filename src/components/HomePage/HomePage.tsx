@@ -30,7 +30,7 @@ export default function HomePage(props) {
 
   return (
     <div className={styles.homePage}>
-      <h2 className="text-center">Search Craigslist</h2>
+      <h2 className={styles.header}>Search Craigslist</h2>
       <HomePageForm initialValues={defaultValues} onSubmit={onSubmit} />
       {submitError && <SubmitError />}
 

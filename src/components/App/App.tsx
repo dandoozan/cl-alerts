@@ -10,10 +10,12 @@ function App() {
     <div className={styles.app}>
       <Header />
       <section className={styles.main}>
-        <Switch>
-          <Route path="/alert" component={AlertPage} />
-          <Route path="/" component={HomePage} />
-        </Switch>
+        <div className={styles.inner}>
+          <Switch>
+            <Route path="/alert" component={AlertPage} />
+            <Route path="/" component={HomePage} />
+          </Switch>
+        </div>
       </section>
     </div>
   );
