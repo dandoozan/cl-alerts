@@ -8,6 +8,7 @@ import { Button, Form } from 'react-bootstrap';
 import cities from '../../data/cities.json';
 import categories from '../../data/categories.json';
 import days from '../../data/days.json';
+import hours from '../../data/hours.json';
 import { schema } from '../../formFields';
 import { SlideDown } from 'react-slidedown';
 import 'react-slidedown/lib/slidedown.css';
@@ -21,12 +22,21 @@ enum DAY_RADIO_OPTIONS {
   everyDay,
   custom,
 }
+enum HOUR_RADIO_OPTIONS {
+  everyFourHours,
+  twiceADay,
+  custom,
+}
 
 export default function HomePageForm(props) {
   let { initialValues, onSubmit } = props;
   let [showMoreOptions, setShowMoreOptions] = useState(true);
   let [selectedDays, setSelectedDays] = useState(initialValues.days);
   let [daysOption, setDaysOption] = useState(DAY_RADIO_OPTIONS.everyDay);
+  let [selectedHours, setSelectedHours] = useState(initialValues.hours);
+  let [hoursOption, setHoursOption] = useState(
+    HOUR_RADIO_OPTIONS.everyFourHours
+  );
 
   function handleMoreOptionsClick(e) {
     setShowMoreOptions(!showMoreOptions);
@@ -34,14 +44,30 @@ export default function HomePageForm(props) {
 
   function handleEveryDayRadioChange(e) {
     setDaysOption(DAY_RADIO_OPTIONS.everyDay);
-    setSelectedDays(days);
+    setSelectedDays([0, 1, 2, 3, 4, 5, 6]);
   }
-  function handleCustomRadioChange(e) {
+  function handleCustomDaysRadioChange(e) {
     setDaysOption(DAY_RADIO_OPTIONS.custom);
   }
   function handleDaysChange(newDays) {
     setDaysOption(DAY_RADIO_OPTIONS.custom);
     setSelectedDays(newDays);
+  }
+
+  function handleEveryFourHoursRadioChange(e) {
+    setHoursOption(HOUR_RADIO_OPTIONS.everyFourHours);
+    setSelectedHours([3, 7, 11, 15, 19, 23]);
+  }
+  function handleTwiceADayRadioChange(e) {
+    setHoursOption(HOUR_RADIO_OPTIONS.twiceADay);
+    setSelectedHours([7, 17]);
+  }
+  function handleCustomHoursRadioChange(e) {
+    setHoursOption(HOUR_RADIO_OPTIONS.custom);
+  }
+  function handleHoursChange(newHours) {
+    setHoursOption(HOUR_RADIO_OPTIONS.custom);
+    setSelectedHours(newHours);
   }
 
   return (
@@ -50,7 +76,10 @@ export default function HomePageForm(props) {
       validationSchema={schema}
       validateOnChange={false}
       onSubmit={(formValues, ...rest) => {
-        onSubmit({ ...formValues, days: selectedDays }, ...rest);
+        onSubmit(
+          { ...formValues, days: selectedDays, hours: selectedHours },
+          ...rest
+        );
       }}
     >
       {({ values, handleChange, handleSubmit, errors, isSubmitting }) => (
@@ -132,30 +161,63 @@ export default function HomePageForm(props) {
           <div className={styles.alertSchedule}>
             <h4>Set alert schedule</h4>
             <div className={styles.innerAlertSchedule}>
-              <Radios
-                {...{
-                  label: 'Days:',
-                  options: [
-                    {
-                      label: 'Every day',
-                      handleChange: handleEveryDayRadioChange,
-                    },
-                    {
-                      label: 'Custom',
-                      handleChange: handleCustomRadioChange,
-                    },
-                  ],
-                  name: 'dayRadios',
-                  selectedIndex: daysOption,
-                }}
-              />
-              <ButtonGroup
-                {...{
-                  values: days,
-                  initialValues: selectedDays,
-                  handleChange: handleDaysChange,
-                }}
-              />
+              <div className={styles.days} data-testid="day-radios">
+                <Radios
+                  {...{
+                    label: 'Days:',
+                    options: [
+                      {
+                        label: 'Every day',
+                        handleChange: handleEveryDayRadioChange,
+                      },
+                      {
+                        label: 'Custom',
+                        handleChange: handleCustomDaysRadioChange,
+                      },
+                    ],
+                    name: 'dayRadios',
+                    selectedIndex: daysOption,
+                  }}
+                />
+                <ButtonGroup
+                  {...{
+                    values: days,
+                    initialValues: selectedDays,
+                    handleChange: handleDaysChange,
+                  }}
+                />
+              </div>
+              <div className={styles.hours} data-testid="hour-radios">
+                <Radios
+                  {...{
+                    label: 'Hours:',
+                    options: [
+                      {
+                        label: 'Every 4 hours',
+                        handleChange: handleEveryFourHoursRadioChange,
+                      },
+                      {
+                        label: 'Twice a day',
+                        handleChange: handleTwiceADayRadioChange,
+                      },
+                      {
+                        label: 'Custom',
+                        handleChange: handleCustomHoursRadioChange,
+                      },
+                    ],
+                    name: 'hourRadios',
+                    selectedIndex: hoursOption,
+                  }}
+                />
+                <ButtonGroup
+                  {...{
+                    values: hours,
+                    initialValues: selectedHours,
+                    handleChange: handleHoursChange,
+                    compact: true,
+                  }}
+                />
+              </div>
             </div>
           </div>
           <div className={styles.sendResultsTo}>

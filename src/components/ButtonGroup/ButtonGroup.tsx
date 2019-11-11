@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './ButtonGroup.module.css';
 import {
   Form,
   Row,
@@ -9,7 +10,14 @@ import {
 import Label from '../Label';
 
 export default function ButtonGroup(props) {
-  let { values, initialValues, handleChange, label, labelSize } = props;
+  let {
+    values,
+    initialValues,
+    handleChange,
+    label,
+    labelSize,
+    compact,
+  } = props;
   labelSize = labelSize || 0;
   return (
     <Form.Group as={Row}>
@@ -17,11 +25,17 @@ export default function ButtonGroup(props) {
       <Col sm={12 - labelSize}>
         <ToggleButtonGroup
           type="checkbox"
+          className="d-block" //add "d-block" (display: block) so that the ToggleButtons wrap correctly
           value={initialValues}
           onChange={handleChange}
         >
-          {values.map(value => (
-            <ToggleButton key={value} value={value}>
+          {values.map((value, i) => (
+            <ToggleButton
+              className={compact && styles.compact}
+              variant="secondary"
+              key={i}
+              value={i}
+            >
               {value}
             </ToggleButton>
           ))}

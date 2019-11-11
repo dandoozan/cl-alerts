@@ -8,6 +8,7 @@ import { Button, Form } from 'react-bootstrap';
 import cities from '../../data/cities.json';
 import categories from '../../data/categories.json';
 import days from '../../data/days.json';
+import hours from '../../data/hours.json';
 import { schema } from '../../formFields';
 import Checkbox from '../Checkbox';
 import ButtonGroup from '../ButtonGroup';
@@ -15,9 +16,13 @@ import ButtonGroup from '../ButtonGroup';
 export default function EditForm(props) {
   let { initialValues, onSubmit } = props;
   let [selectedDays, setSelectedDays] = useState(initialValues.days);
+  let [selectedHours, setSelectedHours] = useState(initialValues.hours);
 
   function handleDaysChange(newDays) {
     setSelectedDays(newDays);
+  }
+  function handleHoursChange(newHours) {
+    setSelectedHours(newHours);
   }
 
   return (
@@ -97,6 +102,16 @@ export default function EditForm(props) {
               handleChange: handleDaysChange,
               label: 'Days',
               labelSize: 2,
+            }}
+          />
+          <ButtonGroup
+            {...{
+              values: hours,
+              initialValues: selectedHours,
+              handleChange: handleHoursChange,
+              label: 'Hours',
+              labelSize: 2,
+              compact: true,
             }}
           />
           <EmailInput

@@ -1,7 +1,6 @@
 import { object, string, number, boolean } from 'yup';
 import cities from './data/cities.json';
 import categories from './data/categories.json';
-import days from './data/days.json';
 
 export const schema = object({
   city: string().required(),
@@ -30,6 +29,7 @@ export const defaultValues = {
   titleOnly: false,
   minPrice: '',
   maxPrice: '',
-  days,
+  days: [0, 1, 2, 3, 4, 5, 6], //todo: colocate this with "everyDay" radio button
+  hours: [3, 7, 11, 15, 19, 23], //todo: colocate this with "everyFourHours" radio button
   email: '',
 };
