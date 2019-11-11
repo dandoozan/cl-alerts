@@ -5,15 +5,19 @@
   margin: 2.4em 0;
 }
 
+.alertSchedule {
+  margin-top: 3em;
+}
+
 .innerAlertSchedule {
   margin-left: 1em;
 }
 
 .sendResultsTo {
-  margin-top: 4em;
+  margin-top: 5em;
 }
 
 .submit {
-  margin-top: 2em;
+  margin-top: 3em;
   text-align: right;
 }
