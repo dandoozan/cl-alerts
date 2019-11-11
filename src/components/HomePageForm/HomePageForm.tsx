@@ -154,6 +154,15 @@ export default function HomePageForm(props) {
                     error: errors.maxPrice,
                   }}
                 />
+                <Checkbox
+                  {...{
+                    label: 'Only include results with pictures',
+                    size: 7,
+                    name: 'picOnly',
+                    value: values.picOnly,
+                    handleChange,
+                  }}
+                />
               </div>
             )}
           </SlideDown>

@@ -39,7 +39,7 @@ export default function EditForm(props) {
           <Select
             {...{
               label: 'City',
-              labelSize: 2,
+              labelSize: 3,
               name: 'city',
               options: cities,
               value: values.city,
@@ -49,7 +49,7 @@ export default function EditForm(props) {
           <Select
             {...{
               label: 'Category',
-              labelSize: 2,
+              labelSize: 3,
               name: 'category',
               options: categories,
               value: values.category,
@@ -59,7 +59,7 @@ export default function EditForm(props) {
           <Input
             {...{
               label: 'Search Term',
-              labelSize: 2,
+              labelSize: 3,
               name: 'searchTerm',
               value: values.searchTerm,
               handleChange,
@@ -68,7 +68,7 @@ export default function EditForm(props) {
           <Checkbox
             {...{
               label: 'Search title only',
-              size: 10,
+              size: 9,
               name: 'titleOnly',
               value: values.titleOnly,
               handleChange,
@@ -78,7 +78,7 @@ export default function EditForm(props) {
           <Input
             {...{
               label: 'Min Price',
-              labelSize: 2,
+              labelSize: 3,
               name: 'minPrice',
               value: values.minPrice,
               handleChange,
@@ -88,20 +88,31 @@ export default function EditForm(props) {
           <Input
             {...{
               label: 'Max Price',
-              labelSize: 2,
+              labelSize: 3,
               name: 'maxPrice',
               value: values.maxPrice,
               handleChange,
               error: errors.maxPrice,
             }}
           />
+          <Checkbox
+            {...{
+              label: 'Only include results with pictures',
+              size: 9,
+              name: 'picOnly',
+              value: values.picOnly,
+              handleChange,
+            }}
+          />
+          <br />
+          <br />
           <ButtonGroup
             {...{
               values: days,
               initialValues: selectedDays,
               handleChange: handleDaysChange,
               label: 'Days',
-              labelSize: 2,
+              labelSize: 3,
             }}
           />
           <ButtonGroup
@@ -110,14 +121,14 @@ export default function EditForm(props) {
               initialValues: selectedHours,
               handleChange: handleHoursChange,
               label: 'Hours',
-              labelSize: 2,
+              labelSize: 3,
               compact: true,
             }}
           />
           <EmailInput
             {...{
               label: 'Email',
-              labelSize: 2,
+              labelSize: 3,
               name: 'email',
               value: values.email,
               handleChange,

@@ -25,6 +25,7 @@ Array [
     ],
     "maxPrice": "",
     "minPrice": "",
+    "picOnly": false,
     "searchTerm": "",
     "titleOnly": false,
   },
