@@ -179,7 +179,7 @@ export default function HomePageForm(props) {
           <hr className={styles.hr} />
           <div className={styles.alertSchedule}>
             <h4>Set alert schedule</h4>
-            <div className={styles.innerAlertSchedule}>
+            <div className="ml-sm-3">
               <div className={styles.days} data-testid="day-radios">
                 <Radios
                   {...{
