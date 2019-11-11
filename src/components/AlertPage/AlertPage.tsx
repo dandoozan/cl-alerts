@@ -92,12 +92,12 @@ export default function AlertPage(props) {
   } else {
     return (
       <div>
-        <h1>Manage Alert</h1>
+        <h2>Manage Alert</h2>
         <div className="mt-4 mb-4">
           {alertData ? (
             <>
-              <h3 className="mb-5">User: {alertData.email}</h3>
-              <h2 className="mb-3">Edit</h2>
+              <h4 className="mb-5">User: {alertData.email}</h4>
+              <h3 className="mb-3">Edit</h3>
               <div className="ml-sm-3">
                 <EditForm initialValues={alertData} onSubmit={onSubmit} />
                 {editError && <SubmitError />}
@@ -106,7 +106,7 @@ export default function AlertPage(props) {
                 </Fade>
               </div>
 
-              <h2 className="mt-5 mb-4">Delete</h2>
+              <h3 className="mt-4 mb-4">Delete</h3>
               <div className="ml-sm-3">
                 <Button variant="danger" size="lg" onClick={handleDeleteClick}>
                   Delete Alert
