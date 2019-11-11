@@ -144,8 +144,14 @@ export default function EditForm(props) {
               error: errors.email,
             }}
           />
-          <Button variant="primary" type="submit" disabled={isSubmitting}>
-            Save changes
+          <Button
+            variant="primary"
+            size="lg"
+            className="mt-3"
+            type="submit"
+            disabled={isSubmitting}
+          >
+            Submit
           </Button>
         </Form>
       )}

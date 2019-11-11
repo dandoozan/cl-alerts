@@ -12,10 +12,11 @@ export default function Input(props) {
     handleChange,
     error,
     labelSize,
+    labelAlign,
   } = props;
   return (
     <Form.Group as={Row} controlId={name}>
-      <Label size={labelSize} text={label} />
+      <Label size={labelSize} text={label} align={labelAlign} />
       <Col sm={12 - labelSize}>
         <Form.Control
           {...{

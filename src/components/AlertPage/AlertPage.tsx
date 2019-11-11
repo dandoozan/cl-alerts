@@ -4,7 +4,7 @@ import { useLocation, Redirect } from 'react-router-dom';
 import { updateAlert, getAlert, deleteAlert } from '../../database';
 import EditForm from '../EditForm';
 import SubmitError from '../SubmitError';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, Spinner } from 'react-bootstrap';
 import { defaultValues } from '../../formFields';
 
 export default function AlertPage(props) {
@@ -92,37 +92,49 @@ export default function AlertPage(props) {
   } else {
     return (
       <div className={styles.editPage}>
-        <h1>Edit Alert</h1>
-        {alertData ? (
-          <>
-            <EditForm initialValues={alertData} onSubmit={onSubmit} />
-            {isEditted && <div>Successfully editted!</div>}
-            {editError && <SubmitError />}
-            <Button variant="danger" onClick={handleDeleteClick}>
-              Delete
-            </Button>
-            {deleteError && <SubmitError />}
+        <h1>Manage Alert</h1>
+        <div className="mt-4 mb-4">
+          {alertData ? (
+            <div>
+              <h3 className="mb-5">User: {alertData.email}</h3>
+              <h2>Edit</h2>
+              <EditForm initialValues={alertData} onSubmit={onSubmit} />
+              {isEditted && <div>Successfully editted!</div>}
+              {editError && <SubmitError />}
 
-            <Modal show={showModal} onHide={handleModalReject}>
-              <Modal.Header closeButton>
-                <Modal.Title>Delete Alert</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                Are you sure you want to delete this alert?
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={handleModalReject}>
-                  No, cancel
-                </Button>
-                <Button variant="primary" onClick={handleModalAccept}>
-                  Yes, delete it
-                </Button>
-              </Modal.Footer>
-            </Modal>
-          </>
-        ) : (
-          'Fetching alert data...'
-        )}
+              <hr className="mt-5 mb-5" />
+
+              <h2 className="mb-3">Delete</h2>
+              <Button variant="danger" size="lg" onClick={handleDeleteClick}>
+                Delete Alert
+              </Button>
+              {deleteError && <SubmitError />}
+
+              <Modal show={showModal} onHide={handleModalReject}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Delete Alert</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  Are you sure you want to delete this alert?
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleModalReject}>
+                    No, cancel
+                  </Button>
+                  <Button variant="primary" onClick={handleModalAccept}>
+                    Yes, delete it
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+            </div>
+          ) : (
+            <div className="text-center m-5">
+              <Spinner animation="border" role="status">
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+            </div>
+          )}
+        </div>
       </div>
     );
   }

@@ -16,12 +16,13 @@ export default function ButtonGroup(props) {
     handleChange,
     label,
     labelSize,
+    labelAlign,
     compact,
   } = props;
   labelSize = labelSize || 0;
   return (
     <Form.Group as={Row}>
-      {label && <Label size={labelSize} text={label} />}
+      {label && <Label size={labelSize} text={label} align={labelAlign} />}
       <Col sm={12 - labelSize}>
         <ToggleButtonGroup
           type="checkbox"

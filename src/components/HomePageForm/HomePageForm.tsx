@@ -92,6 +92,7 @@ export default function HomePageForm(props) {
               options: cities,
               value: values.city,
               handleChange,
+              labelAlign: 'right',
             }}
           />
           <Select
@@ -102,6 +103,7 @@ export default function HomePageForm(props) {
               options: categories,
               value: values.category,
               handleChange,
+              labelAlign: 'right',
             }}
           />
           <Input
@@ -112,6 +114,7 @@ export default function HomePageForm(props) {
               value: values.searchTerm,
               placeholder: '(Optional) e.g. dining table',
               handleChange,
+              labelAlign: 'right',
             }}
           />
           <Checkbox
@@ -121,6 +124,7 @@ export default function HomePageForm(props) {
               name: 'titleOnly',
               value: values.titleOnly,
               handleChange,
+              labelAlign: 'right',
             }}
           />
           <div className="text-right">
@@ -140,6 +144,7 @@ export default function HomePageForm(props) {
                     value: values.minPrice,
                     placeholder: 'e.g. 10',
                     handleChange,
+                    labelAlign: 'right',
                     error: errors.minPrice,
                   }}
                 />
@@ -151,6 +156,7 @@ export default function HomePageForm(props) {
                     value: values.maxPrice,
                     placeholder: 'e.g. 1500',
                     handleChange,
+                    labelAlign: 'right',
                     error: errors.maxPrice,
                   }}
                 />
@@ -162,6 +168,7 @@ export default function HomePageForm(props) {
                     value: values.spamKeywords,
                     placeholder: 'e.g. broken, wanted, etc. (comma delimited)',
                     handleChange,
+                    labelAlign: 'right',
                   }}
                 />
                 <Checkbox
@@ -171,6 +178,7 @@ export default function HomePageForm(props) {
                     name: 'picOnly',
                     value: values.picOnly,
                     handleChange,
+                    labelAlign: 'right',
                   }}
                 />
               </div>
@@ -248,6 +256,7 @@ export default function HomePageForm(props) {
                 name: 'email',
                 value: values.email,
                 handleChange,
+                labelAlign: 'right',
                 error: errors.email,
               }}
             />

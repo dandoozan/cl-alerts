@@ -3,10 +3,18 @@ import { Form, Col, Row } from 'react-bootstrap';
 import Label from '../Label';
 
 export default function Select(props) {
-  let { label, name, options, value, handleChange, labelSize } = props;
+  let {
+    label,
+    name,
+    options,
+    value,
+    handleChange,
+    labelSize,
+    labelAlign,
+  } = props;
   return (
     <Form.Group as={Row} controlId={name}>
-      <Label size={labelSize} text={label} />
+      <Label size={labelSize} text={label} align={labelAlign} />
       <Col sm={12 - labelSize}>
         <Form.Control
           as="select"
