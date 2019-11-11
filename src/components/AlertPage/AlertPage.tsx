@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import styles from './AlertPage.module.css';
+// import styles from './AlertPage.module.css';
 import { useLocation, Redirect } from 'react-router-dom';
 import { updateAlert, getAlert, deleteAlert } from '../../database';
 import EditForm from '../EditForm';
 import SubmitError from '../SubmitError';
-import { Button, Modal, Spinner } from 'react-bootstrap';
+import { Button, Modal, Spinner, Fade } from 'react-bootstrap';
 import { defaultValues } from '../../formFields';
 
 export default function AlertPage(props) {
@@ -80,7 +80,7 @@ export default function AlertPage(props) {
         if (!ignore) {
           setIsEditted(false);
         }
-      }, 1000);
+      }, 5000);
     }
     return () => {
       ignore = true;
@@ -91,24 +91,28 @@ export default function AlertPage(props) {
     return <Redirect push to="/" />;
   } else {
     return (
-      <div className={styles.editPage}>
+      <div>
         <h1>Manage Alert</h1>
         <div className="mt-4 mb-4">
           {alertData ? (
             <div>
               <h3 className="mb-5">User: {alertData.email}</h3>
-              <h2>Edit</h2>
-              <EditForm initialValues={alertData} onSubmit={onSubmit} />
-              {isEditted && <div>Successfully editted!</div>}
-              {editError && <SubmitError />}
+              <h2 className="mb-3">Edit</h2>
+              <div className="ml-sm-3">
+                <EditForm initialValues={alertData} onSubmit={onSubmit} />
+                <Fade in={isEditted}>
+                  <p className="mt-1">Successfully editted!</p>
+                </Fade>
+                {editError && <SubmitError />}
+              </div>
 
-              <hr className="mt-5 mb-5" />
-
-              <h2 className="mb-3">Delete</h2>
-              <Button variant="danger" size="lg" onClick={handleDeleteClick}>
-                Delete Alert
-              </Button>
-              {deleteError && <SubmitError />}
+              <h2 className="mt-5 mb-3">Delete</h2>
+              <div className="ml-sm-3">
+                <Button variant="danger" size="lg" onClick={handleDeleteClick}>
+                  Delete Alert
+                </Button>
+                {deleteError && <SubmitError />}
+              </div>
 
               <Modal show={showModal} onHide={handleModalReject}>
                 <Modal.Header closeButton>

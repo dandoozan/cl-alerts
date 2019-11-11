@@ -151,7 +151,7 @@ export default function EditForm(props) {
             type="submit"
             disabled={isSubmitting}
           >
-            Submit
+            Submit Edit
           </Button>
         </Form>
       )}
