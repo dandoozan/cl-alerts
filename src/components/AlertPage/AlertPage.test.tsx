@@ -65,11 +65,11 @@ describe('AlertPage', () => {
       </MemoryRouter>
     );
 
-    //first, make sure that "Edit Alert" is in the document as expected
-    expect(getByText('Edit Alert')).toBeInTheDocument();
+    //first, make sure that "Manage Alert" is in the document as expected
+    expect(getByText('Manage Alert')).toBeInTheDocument();
 
     //now, make sure it's removed, which means the redirect happened
-    await waitForElementToBeRemoved(() => getByText('Edit Alert'));
+    await waitForElementToBeRemoved(() => getByText('Manage Alert'));
   });
   it('should call database.updateAlert on edit submit', async () => {
     let { findByText } = render(
@@ -78,7 +78,7 @@ describe('AlertPage', () => {
       </MemoryRouter>
     );
 
-    let submitButton = await findByText('Save changes');
+    let submitButton = await findByText('Submit Edit');
     fireEvent.click(submitButton);
 
     //wait for the submit button to become enabled again
@@ -99,7 +99,7 @@ describe('AlertPage', () => {
       </MemoryRouter>
     );
 
-    fireEvent.click(await findByText('Save changes'));
+    fireEvent.click(await findByText('Submit Edit'));
 
     expect(await findByText('Successfully editted!')).toBeInTheDocument();
   });
@@ -113,7 +113,7 @@ describe('AlertPage', () => {
       </MemoryRouter>
     );
 
-    fireEvent.click(await findByText('Save changes'));
+    fireEvent.click(await findByText('Submit Edit'));
 
     expect(await findByText('Oops', { exact: false })).toBeInTheDocument();
   });
@@ -125,7 +125,7 @@ describe('AlertPage', () => {
       </MemoryRouter>
     );
 
-    fireEvent.click(await findByText('Delete'));
+    fireEvent.click(await findByText('Delete Alert'));
 
     //wait for the modal to show up
     await waitForElement(() =>
@@ -147,7 +147,7 @@ describe('AlertPage', () => {
       </MemoryRouter>
     );
 
-    fireEvent.click(await findByText('Delete'));
+    fireEvent.click(await findByText('Delete Alert'));
 
     //wait for the modal to show up
     await waitForElement(() =>
@@ -168,7 +168,7 @@ describe('AlertPage', () => {
       </MemoryRouter>
     );
 
-    fireEvent.click(await findByText('Delete'));
+    fireEvent.click(await findByText('Delete Alert'));
 
     //wait for the modal to show up
     await waitForElement(() =>
@@ -193,7 +193,7 @@ describe('AlertPage', () => {
     });
 
     //click submit
-    fireEvent.click(await findByText('Save changes'));
+    fireEvent.click(await findByText('Submit Edit'));
 
     expect(await findByText('Please enter a valid email')).toBeInTheDocument();
   });
@@ -211,7 +211,7 @@ describe('AlertPage', () => {
     });
 
     //click submit
-    fireEvent.click(await findByText('Save changes'));
+    fireEvent.click(await findByText('Submit Edit'));
 
     expect(await findByText('Please enter a valid email')).toBeInTheDocument();
   });

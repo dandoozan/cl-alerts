@@ -95,7 +95,7 @@ export default function AlertPage(props) {
         <h1>Manage Alert</h1>
         <div className="mt-4 mb-4">
           {alertData ? (
-            <div>
+            <>
               <h3 className="mb-5">User: {alertData.email}</h3>
               <h2 className="mb-3">Edit</h2>
               <div className="ml-sm-3">
@@ -130,7 +130,7 @@ export default function AlertPage(props) {
                   </Button>
                 </Modal.Footer>
               </Modal>
-            </div>
+            </>
           ) : (
             <div className="text-center m-5">
               <Spinner animation="border" role="status">
