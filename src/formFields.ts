@@ -3,22 +3,22 @@ import cities from './data/cities.json';
 import categories from './data/categories.json';
 
 export const schema = object({
-  city: string().required(),
-  category: string().required(),
+  city: string().required('Please select a city'),
+  category: string().required('Please select a category'),
   searchTerm: string(),
   titleOnly: boolean(),
   minPrice: number()
-    .typeError('Price must be a number')
-    .integer('Price must be an integer')
-    .min(0, 'Price must be a positive integer'),
+    .typeError('Please enter an integer greater than or equal to 0')
+    .integer('Please enter an integer greater than or equal to 0')
+    .min(0, 'Please enter an integer greater than or equal to 0'),
   maxPrice: number()
-    .typeError('Price must be a number')
-    .integer('Price must be an integer')
-    .min(0, 'Price must be a positive integer'),
+    .typeError('Please enter an integer greater than 0')
+    .integer('Please enter an integer greater than 0')
+    .min(1, 'Please enter an integer greater than 0'),
   picOnly: boolean(),
   email: string()
-    .email('Email must be a valid email')
-    .required('Email is required'),
+    .email('Please enter a valid email')
+    .required('Please enter a valid email'),
 });
 
 //todo: figure out how to get default values from the yup schema (so that I only

@@ -195,7 +195,7 @@ describe('AlertPage', () => {
     //click submit
     fireEvent.click(await findByText('Save changes'));
 
-    expect(await findByText('Email is required')).toBeInTheDocument();
+    expect(await findByText('Please enter a valid email')).toBeInTheDocument();
   });
   it('should show error if email is not valid', async () => {
     let { findByLabelText, findByText } = render(
@@ -213,6 +213,6 @@ describe('AlertPage', () => {
     //click submit
     fireEvent.click(await findByText('Save changes'));
 
-    expect(await findByText('Email must be a valid email')).toBeInTheDocument();
+    expect(await findByText('Please enter a valid email')).toBeInTheDocument();
   });
 });

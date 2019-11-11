@@ -32,7 +32,7 @@ describe('HomePageForm', () => {
     //click submit
     fireEvent.click(getByText('Submit'));
 
-    expect(await findByText('Email is required')).toBeInTheDocument();
+    expect(await findByText('Please enter a valid email')).toBeInTheDocument();
   });
   it('should show error if email is not valid', async () => {
     let { getByLabelText, getByText, findByText } = render(
@@ -52,7 +52,7 @@ describe('HomePageForm', () => {
     //click submit
     fireEvent.click(getByText('Submit'));
 
-    expect(await findByText('Email must be a valid email')).toBeInTheDocument();
+    expect(await findByText('Please enter a valid email')).toBeInTheDocument();
   });
   it('should select all day checkboxes when "Every day" radio button is selected', async () => {
     let { getByLabelText, getByTestId } = render(
