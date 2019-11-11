@@ -15,6 +15,7 @@ export const schema = object({
     .typeError('Please enter an integer greater than 0')
     .integer('Please enter an integer greater than 0')
     .min(1, 'Please enter an integer greater than 0'),
+  spamKeywords: string(),
   picOnly: boolean(),
   email: string()
     .email('Please enter a valid email')
@@ -30,6 +31,7 @@ export const defaultValues = {
   titleOnly: false,
   minPrice: '',
   maxPrice: '',
+  spamKeywords: '',
   picOnly: false,
   days: [0, 1, 2, 3, 4, 5, 6], //todo: colocate this with "everyDay" radio button
   hours: [3, 7, 11, 15, 19, 23], //todo: colocate this with "everyFourHours" radio button

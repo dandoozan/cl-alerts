@@ -154,6 +154,16 @@ export default function HomePageForm(props) {
                     error: errors.maxPrice,
                   }}
                 />
+                <Input
+                  {...{
+                    label: 'Spam keyword(s)',
+                    labelSize: 5,
+                    name: 'spamKeywords',
+                    value: values.spamKeywords,
+                    placeholder: 'e.g. broken, wanted, etc. (comma delimited)',
+                    handleChange,
+                  }}
+                />
                 <Checkbox
                   {...{
                     label: 'Only include results with pictures',

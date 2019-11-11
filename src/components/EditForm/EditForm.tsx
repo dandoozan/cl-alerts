@@ -95,6 +95,15 @@ export default function EditForm(props) {
               error: errors.maxPrice,
             }}
           />
+          <Input
+            {...{
+              label: 'Spam keyword(s)',
+              labelSize: 3,
+              name: 'spamKeywords',
+              value: values.spamKeywords,
+              handleChange,
+            }}
+          />
           <Checkbox
             {...{
               label: 'Only include results with pictures',

@@ -27,6 +27,7 @@ Array [
     "minPrice": "",
     "picOnly": false,
     "searchTerm": "",
+    "spamKeywords": "",
     "titleOnly": false,
   },
 ]
