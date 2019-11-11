@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { addAlert } from '../../database';
 import HomePageForm from '../HomePageForm';
 import SubmitError from '../SubmitError';
-import { Modal } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 import { defaultValues } from '../../formFields';
 
 export default function HomePage(props) {
@@ -34,7 +34,7 @@ export default function HomePage(props) {
       <HomePageForm initialValues={defaultValues} onSubmit={onSubmit} />
       {submitError && <SubmitError />}
 
-      <Modal show={showModal} onHide={hideModal}>
+      <Modal centered={true} show={showModal} onHide={hideModal}>
         <Modal.Header closeButton>
           <Modal.Title>Success!</Modal.Title>
         </Modal.Header>
@@ -45,12 +45,18 @@ export default function HomePage(props) {
             </p>
             <p>
               You will automatically receive new craigslist results in your
-              inbox according to the schedule you specified.
+              inbox according to the specified schedule.
             </p>
           </div>
-          <Link to={`/alert?id=${alertData.id}`}>View/Edit this alert</Link>
         </Modal.Body>
-        <Modal.Footer></Modal.Footer>
+        <Modal.Footer>
+          <Link to={`/alert?id=${alertData.id}`}>
+            <Button variant="secondary">View/Edit this alert</Button>
+          </Link>
+          <Button variant="primary" onClick={hideModal}>
+            Done
+          </Button>
+        </Modal.Footer>
       </Modal>
     </div>
   );

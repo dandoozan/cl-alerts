@@ -30,7 +30,7 @@ enum HOUR_RADIO_OPTIONS {
 
 export default function HomePageForm(props) {
   let { initialValues, onSubmit } = props;
-  let [showMoreOptions, setShowMoreOptions] = useState(true);
+  let [showMoreOptions, setShowMoreOptions] = useState(false);
   let [selectedDays, setSelectedDays] = useState(initialValues.days);
   let [daysOption, setDaysOption] = useState(DAY_RADIO_OPTIONS.everyDay);
   let [selectedHours, setSelectedHours] = useState(initialValues.hours);
