@@ -32,7 +32,11 @@ export default function HomePage(props) {
     <div className={styles.homePage}>
       <h2 className={styles.header}>Search Craigslist</h2>
       <HomePageForm initialValues={defaultValues} onSubmit={onSubmit} />
-      {submitError && <SubmitError />}
+      {submitError && (
+        <div className="text-sm-right">
+          <SubmitError />
+        </div>
+      )}
 
       <Modal centered={true} show={showModal} onHide={hideModal}>
         <Modal.Header closeButton>

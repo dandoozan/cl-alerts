@@ -261,7 +261,7 @@ export default function HomePageForm(props) {
               }}
             />
           </div>
-          <div className={styles.submit}>
+          <div className="text-sm-right mt-5">
             <Button
               variant="primary"
               size="lg"

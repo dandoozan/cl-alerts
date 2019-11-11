@@ -100,13 +100,13 @@ export default function AlertPage(props) {
               <h2 className="mb-3">Edit</h2>
               <div className="ml-sm-3">
                 <EditForm initialValues={alertData} onSubmit={onSubmit} />
+                {editError && <SubmitError />}
                 <Fade in={isEditted}>
                   <p className="mt-1">Successfully editted!</p>
                 </Fade>
-                {editError && <SubmitError />}
               </div>
 
-              <h2 className="mt-5 mb-3">Delete</h2>
+              <h2 className="mt-5 mb-4">Delete</h2>
               <div className="ml-sm-3">
                 <Button variant="danger" size="lg" onClick={handleDeleteClick}>
                   Delete Alert
