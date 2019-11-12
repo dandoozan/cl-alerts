@@ -31,7 +31,10 @@ export default function EditForm(props) {
       validationSchema={schema}
       validateOnChange={false}
       onSubmit={(formValues, ...rest) => {
-        onSubmit({ ...formValues, days: selectedDays }, ...rest);
+        onSubmit(
+          { ...formValues, days: selectedDays, hours: selectedHours },
+          ...rest
+        );
       }}
     >
       {({ values, handleChange, handleSubmit, errors, isSubmitting }) => (
