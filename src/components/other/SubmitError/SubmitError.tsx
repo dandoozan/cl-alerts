@@ -1,5 +1,4 @@
 import React from 'react';
-// import styles from './SubmitError.module.css';
 
 export default function SubmitError(props) {
   return (
