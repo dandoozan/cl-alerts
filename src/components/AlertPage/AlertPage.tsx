@@ -93,10 +93,12 @@ export default function AlertPage(props) {
     return (
       <div>
         <h2>Manage Alert</h2>
-        <div className="mt-4 mb-4">
+        <div className="mb-4">
           {alertData ? (
             <>
-              <h4 className="mb-5">User: {alertData.email}</h4>
+              <p className="mb-5 h4 font-weight-normal">
+                User: <span>{alertData.email}</span>
+              </p>
               <h3 className="mb-3">Edit</h3>
               <div className="ml-sm-3">
                 <EditForm initialValues={alertData} onSubmit={onSubmit} />
