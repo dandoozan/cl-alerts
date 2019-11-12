@@ -22,6 +22,7 @@ export default function AlertPage(props) {
   async function onSubmit(formValues, { setSubmitting }) {
     setEditError(false);
     if (await updateAlert(alertId, formValues)) {
+      setAlertData(formValues);
       setIsEditted(true);
     } else {
       setEditError(true);
