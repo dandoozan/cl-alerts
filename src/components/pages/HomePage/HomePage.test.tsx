@@ -8,7 +8,7 @@ import {
   prettyDOM,
 } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import * as db from '../../database';
+import * as db from '../../../database';
 import { BrowserRouter } from 'react-router-dom';
 
 //tests to make:

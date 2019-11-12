@@ -9,7 +9,7 @@ import {
 } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { MemoryRouter } from 'react-router-dom';
-import * as db from '../../database';
+import * as db from '../../../database';
 
 //tests to make:
 //  D-should render alert data
@@ -32,7 +32,7 @@ describe('AlertPage', () => {
     email: 'test@example.com',
   };
 
-  jest.mock('../../database');
+  jest.mock('../../../database');
 
   beforeEach(() => {
     //@ts-ignore

@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import styles from './HomePageForm.module.css';
 import { Formik } from 'formik';
-import Select from '../Select';
-import Input from '../Input';
-import EmailInput from '../EmailInput';
+import Select from '../../../form/Select';
+import Input from '../../../form/Input';
+import EmailInput from '../../../form/EmailInput';
 import { Button, Form } from 'react-bootstrap';
-import cities from '../../data/cities.json';
-import categories from '../../data/categories.json';
-import days from '../../data/days.json';
-import hours from '../../data/hours.json';
-import { schema } from '../../formFields';
+import cities from '../../../../data/cities.json';
+import categories from '../../../../data/categories.json';
+import days from '../../../../data/days.json';
+import hours from '../../../../data/hours.json';
+import { schema } from '../../../../formFields';
 import { SlideDown } from 'react-slidedown';
 import 'react-slidedown/lib/slidedown.css';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import Checkbox from '../Checkbox';
-import ButtonGroup from '../ButtonGroup';
-import Radios from '../Radios';
+import Checkbox from '../../../form/Checkbox';
+import ButtonGroup from '../../../form/ButtonGroup';
+import Radios from '../../../form/Radios';
 
 enum DAY_RADIO_OPTIONS {
   everyDay,

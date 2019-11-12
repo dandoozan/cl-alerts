@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import styles from './HomePage.module.css';
 import { Link } from 'react-router-dom';
-import { addAlert } from '../../database';
-import HomePageForm from '../HomePageForm';
-import SubmitError from '../SubmitError';
+import { addAlert } from '../../../database';
+import HomePageForm from './HomePageForm';
+import SubmitError from '../../other/SubmitError';
 import { Modal, Button } from 'react-bootstrap';
-import { defaultValues } from '../../formFields';
+import { defaultValues } from '../../../formFields';
 
 export default function HomePage(props) {
   let [alertData, setAlertData] = useState<any>({});

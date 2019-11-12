@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 // import styles from './AlertPage.module.css';
 import { useLocation, Redirect } from 'react-router-dom';
-import { updateAlert, getAlert, deleteAlert } from '../../database';
-import EditForm from '../EditForm';
-import SubmitError from '../SubmitError';
+import { updateAlert, getAlert, deleteAlert } from '../../../database';
+import EditForm from './EditForm';
+import SubmitError from '../../other/SubmitError';
 import { Button, Modal, Spinner, Fade } from 'react-bootstrap';
-import { defaultValues } from '../../formFields';
+import { defaultValues } from '../../../formFields';
 
 export default function AlertPage(props) {
   let [alertData, setAlertData] = useState<any>(null);

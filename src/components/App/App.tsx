@@ -1,9 +1,9 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import styles from './App.module.css';
-import Header from '../Header';
-import AlertPage from '../AlertPage';
-import HomePage from '../HomePage';
+import Header from '../other/Header';
+import AlertPage from '../pages/AlertPage';
+import HomePage from '../pages/HomePage';
 
 function App() {
   return (

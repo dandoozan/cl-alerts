@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 // import styles from './EditForm.module.css';
 import { Formik } from 'formik';
-import Select from '../Select';
-import Input from '../Input';
-import EmailInput from '../EmailInput';
+import Select from '../../../form/Select';
+import Input from '../../../form/Input';
+import EmailInput from '../../../form/EmailInput';
 import { Button, Form } from 'react-bootstrap';
-import cities from '../../data/cities.json';
-import categories from '../../data/categories.json';
-import days from '../../data/days.json';
-import hours from '../../data/hours.json';
-import { schema } from '../../formFields';
-import Checkbox from '../Checkbox';
-import ButtonGroup from '../ButtonGroup';
+import cities from '../../../../data/cities.json';
+import categories from '../../../../data/categories.json';
+import days from '../../../../data/days.json';
+import hours from '../../../../data/hours.json';
+import { schema } from '../../../../formFields';
+import Checkbox from '../../../form/Checkbox';
+import ButtonGroup from '../../../form/ButtonGroup';
 
 export default function EditForm(props) {
   let { initialValues, onSubmit } = props;

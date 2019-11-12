@@ -2,9 +2,9 @@ import React from 'react';
 import HomePageForm from './HomePageForm';
 import { render, fireEvent, within, prettyDOM } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { defaultValues } from '../../formFields';
-import days from '../../data/days.json';
-import hours from '../../data/hours.json';
+import { defaultValues } from '../../../../formFields';
+import days from '../../../../data/days.json';
+import hours from '../../../../data/hours.json';
 
 //tests to make:
 //  X-should disable button on submit
