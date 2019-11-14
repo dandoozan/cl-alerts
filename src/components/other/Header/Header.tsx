@@ -6,7 +6,7 @@ export default function Header(props) {
     <header className={styles.header}>
       <div className={styles.title}>Craigslist Alerts</div>
       <div className={styles.subtitle}>
-        Automatically receive craigslist results via email.
+        Automatically receive Craigslist results via email.
       </div>
     </header>
   );
